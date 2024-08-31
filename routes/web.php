@@ -17,6 +17,8 @@ use Illuminate\Routing\Controller as RoutingController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Models\User as ModelsUser;
+use Inertia\Inertia;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -105,3 +107,6 @@ Route::post('/confirma/codigo', [ControllerLogin::class, 'confirma_codigo']);
 Route::get('/form/atualiza/usuario', [ControllerLogin::class, 'form_atualiza_usuario']);
 Route::post('/atualizar/user', [ControllerLogin::class, 'atualizar_usuario']);
 
+Route::get('/teste', function(){
+    return Inertia::render('FormMembro');
+});

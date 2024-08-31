@@ -22,41 +22,41 @@
             &nbsp; Menu
         </h1>
 
-        <inertia-link class="links-1" :href="route('index')">
+        <Link class="links-1" href="/cadastro/membro">
             <i><img src="public\botao-home.png" alt=""></i> &nbsp; <p>Home</p>
-        </inertia-link>
+        </Link>
 
-        <inertia-link class="links-2" >
+        <Link class="links-2" href="/teste">
             <i><img src="public\dinheiro.png" alt=""></i> &nbsp; <p>Ofertas</p>
-        </inertia-link>
+        </Link>
 
-        <inertia-link class="links-3" >
+        <Link class="links-3" href="/cadastro/membro">
             <i><img src="public\despesas.png" alt=""></i> &nbsp; <p>Despesas</p>
-        </inertia-link>
+        </Link>
 
-        <inertia-link class="links-8" >
+        <Link class="links-8" href="/cadastro/membro">
             <i><img src="public\comparecimento.png" alt=""></i> &nbsp; <p>Presença</p>
-        </inertia-link>
+        </Link>
 
-        <inertia-link class="links-4" >
+        <Link class="links-4" href="/cadastro/membro">
             <i><img src="public\pago.png" alt=""></i> &nbsp; <p>Resumo</p>
-        </inertia-link>
+        </Link>
 
-        <inertia-link class="links-5" >
+        <Link class="links-5" href="/cadastro/membro">
             <i><img src="public\contrato.png" alt=""></i> &nbsp; <p>Caixa</p>
-        </inertia-link>
+        </Link>
 
-        <inertia-link class="links-6" >
+        <Link class="links-6" href="/cadastro/membro">
             <i><img src="public\sombra-de-usuario-masculino.png" alt=""></i> &nbsp; <p>Usuários</p>
-        </inertia-link>
+        </Link>
 
-        <inertia-link class="links-7" >
+        <Link class="links-7" href="/cadastro/membro">
             <i><img src="public\companhia.png" alt=""></i> &nbsp; <p>Selecionar Filial</p>
-        </inertia-link>
+        </Link>
 
-        <inertia-link class="links-9" >
+        <Link class="links-9" href="/cadastro/membro">
             <i><img src="public\simbolo-de-logout.png" alt=""></i> &nbsp; <p>Logout</p>
-        </inertia-link>   
+        </Link>   
 
 
     </div> <!--menu-->
@@ -92,12 +92,11 @@
 </div> <!--menu-subtable-->
 </div> <!--conteiner-geral-->
     </div>
+    
 </template>
-<script>
+<script setup >
   import { Link } from '@inertiajs/vue3';
-export default {
-  
-}
+
 </script>
 
 <style lang="">

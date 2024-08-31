@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\caixas;
 use App\Models\despesas;
 use App\Models\ofertas;
