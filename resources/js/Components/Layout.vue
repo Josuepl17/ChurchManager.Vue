@@ -95,7 +95,547 @@
     
 </template>
 
+<style>
 
+:root {
+    --titulos: #111826;
+    --subtitulos: #012841;
+    --fundos: #1e1f1f55;
+    --select: #00657c;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#conteiner-geral {
+    width: 100%;
+    height: 97dvh;
+}
+
+/*....................................................Parte 1............................................*/
+#cabecalho {
+    display: flex;
+    background-color: var(--titulos);
+    height: 08%;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.271);
+}
+
+#cabecalho #usuario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#cabecalho h4 {
+    color: white;
+    margin-right: 50px;
+    margin-left: 15px;
+}
+
+
+#cabecalho p {
+    color: white;
+
+
+}
+
+#cabecalho img {
+    width: 38px;
+    margin-right: 15px;
+}
+
+/*....................................................Parte 2............................................*/
+
+
+#menu-subtable {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 92%;
+
+}
+
+#menu {
+    display: flex;
+    flex-direction: column;
+    width: 16%;
+    height: 100%;
+    min-width: 150px;
+    border-right: 1px solid rgba(0, 0, 0, 0.211);
+    box-sizing: border-box;
+    /*importante para Responsividade*/
+    /*determina o tanto que o menu pode se diminuir para que a tabela não caia no overflow*/
+
+}
+
+
+
+#menu .links,
+#menu .links-1,
+#menu .links-2,
+#menu .links-3,
+#menu .links-4,
+#menu .links-5,
+#menu .links-6,
+#menu .links-7,
+#menu .links-8,
+#menu .links-9 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.211);
+    width: 100%;
+    height: 5%;
+    color: black;
+}
+
+i{
+    width: 09%;
+}
+
+
+
+#menu .links i,
+#menu .links-1 i,
+#menu .links-2 i,
+#menu .links-3 i,
+#menu .links-4 i,
+#menu .links-5 i,
+#menu .links-6 i,
+#menu .links-7 i,
+#menu .links-8 i,
+#menu .links-9 i {
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#menu .links p,
+#menu .links-1 p,
+#menu .links-2 p,
+#menu .links-3 p,
+#menu .links-4 p,
+#menu .links-5 p,
+#menu .links-6 p,
+#menu .links-7 p,
+#menu .links-8 p,
+#menu .links-9 p {
+    margin-left: 5px;
+}
+
+#menu .links:hover,
+#menu .links-1:hover,
+#menu .links-2:hover,
+#menu .links-3:hover,
+#menu .links-4:hover,
+#menu .links-5:hover,
+#menu .links-6:hover,
+#menu .links-7:hover,
+#menu .links-8:hover,
+#menu .links-9:hover {
+    background-color: var(--select);
+    color: white;
+    transition: 0.4s;
+}
+
+
+
+
+#menu h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    background-color: var(--subtitulos);
+    color: white;
+    height: 07%;
+    width: 100%;
+}
+
+
+
+
+
+
+/*....................................................Parte 3............................................*/
+
+#subtabela-conteudo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /*usado para alinhar ao centro apenas*/
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--fundos);
+
+}
+
+#subtabela {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 07%;
+    background-color: var(--subtitulos);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.445);
+
+}
+
+/*....................................................Parte 4............................................*/
+
+
+#titulo-pagina {
+    display: flex;
+    width: 97%;
+    height: 04%;
+    background-color: var(--subtitulos);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    border-radius: 4px 4px 0px 0px;
+    margin-top: 0.5%;
+}
+
+
+#open-menu {
+    display: none;
+}
+
+/*....................................................Parte 5............................................*/
+
+#conteudo {
+    overflow: auto;
+    /*rolagem tela de membros,as demais telas tem suas propiasrolagem */
+    height: 84%;
+    width: 97%;
+    background-color: white;
+    border-radius: 0px 0px 5px 5px;
+
+}
+
+i img{
+    width: 20px;
+   
+}
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #000;
+    z-index: 9999;
+}
+
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+
+/*............... mudanças Telefone................*/
+
+@media (max-width: 700px) {
+    /* Para diminuir tem que cortar texto */
+    /*importante para Responsividade*/
+
+    #open-menu {
+        display: block;
+        position: fixed;
+        top: 1%;
+        left: 3%;
+        cursor: pointer;
+        color: #fff;
+        font-size: 24px;
+
+    }
+
+    #menu {
+        width: 250px;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: -250px;
+        transition: left 0.3s ease;
+        background-color: white;
+        z-index: 1;
+        box-shadow: 15px 2px 2px solid black;
+
+    }
+
+    #menu a {
+        color: black;
+
+    }
+
+    #menu h1 {
+        background-color: var(--titulos);
+        color: white;
+        height: 7%;
+    }
+
+    #cabecalho {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #cabecalho h4 {
+        display: none;
+
+
+    }
+
+
+    .remover {
+        /* CSS criado para remover itens da Tela para Celular*/
+        display: none;
+        /*importante para Responsividade*/
+    }
+
+
+}
+
+@media print {
+
+    *{
+        color: black;
+        
+    }
+    #menu {
+        display: none;
+    }
+
+    #cabecalho {
+        display: none;
+    }
+
+    #subtabela {
+        display: none;
+    }
+
+    title {
+        display: none;
+    }
+
+
+    #valor-registrar {
+        font-size: 50px;
+    }
+
+    #titulo-pagina p {
+        font-size: 50px;
+    }
+
+    #formulario-registro {
+        display: none;
+    }
+
+}
+
+
+
+
+#subtabela form { /* Filtro por Data */
+    display: flex;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    
+}
+
+#subtabela form input {
+    border: none;
+    margin-right: 15px;
+    font-size: 13px;
+    padding: 2px;
+    height: 70%;
+    border-radius: 3px;
+}
+
+#subtabela a { /* Botoes Alem do Filtro */
+    margin-right: 15px;
+}
+
+
+/* Tabela */
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: #f5f5f5;
+    width: 100%;
+    margin-bottom: 20px;
+   
+  }
+  
+  th, td {
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+
+  }
+  
+  th {
+    background-color: var(--titulos);
+    color: #fff;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #ddd;
+  }
+  
+  tr:hover {
+    background-color: #ccc;
+  }
+
+  td form button {
+    all: unset;
+    width: 100%;
+    height: 100%;
+    
+}
+
+#inserir-verde{
+    width: 10%;
+    background-color: rgb(0, 98, 0);
+
+}
+
+#inserir-verde:active{
+    transform: translateY(5);
+
+}
+
+#inserir-verde a{
+    display: block;
+    height: 100%;
+    width: 100%;
+    
+    
+}
+
+#inserir-verde:hover{
+    background-color: rgb(0, 163, 0);
+    transition: 0.2s ease;
+}
+
+#X{
+    background-color: rgb(126, 0, 0);
+    color: white;
+}
+
+#X:hover{
+    background-color: red;
+    color: white;
+}
+
+table tr:first-child { /*Fixar no Topo a Primeira Linha da Tabela */
+    position: sticky;
+    top: -1;
+}
+
+
+/* Conteudo Apenas os dados da Tabela */
+#tabela-dados {
+    width: 100%;
+    height: 75%;
+    overflow: auto;
+}
+
+
+/* Div do Valor Total */
+#valor-total {
+    display: flex;
+    width: 100%;
+    background-color: var(--titulos);
+    color: white;
+    justify-content: flex-end;
+    align-items: center;
+    height: 5%;
+}
+
+#valor-total p {
+    margin-right: 10px;
+}
+
+/* Formulario de Inserção de Dados */
+#formulario-registro {
+    display: flex;
+    width: 100%;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    height: 16%;
+    flex-wrap: wrap;
+}
+
+#formulario-registro form label,
+#formulario-registro form label,
+#formulario-registro form input,
+#formulario-registro form button {
+    padding: 10px;
+}
+
+/* Div Conteudo da Flash Mensage */
+.flash-message{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   width: 100%;
+   height: 4%;
+   animation: fadeOut 3s forwards;
+   
+   
+}
+
+@keyframes fadeOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  
+
+</style>
 
 
 

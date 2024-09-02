@@ -33,8 +33,11 @@ class MembrosController extends Controller
 
     public function index(Request $request)
     {
-    
-        return Inertia::render('index');
+        $empresas_id = auth()->user()->empresa_id;
+        $dados = $request->pesquisa;
+        $membros = membros::whereRaw('LOWER(nome) LIKE ?', ["%" . strtolower($dados) . "%"])->where('empresa_id', $empresas_id)->get();
+        $qtdEventos = count(Eventos::all());
+        return Inertia::render('index', compact('membros', 'qtdEventos'));
     }
 
     public function cadastro_membro()

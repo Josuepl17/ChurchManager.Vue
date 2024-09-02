@@ -4,7 +4,8 @@
 
 <!----------------------------------------------------------------------------------->
 <template v-slot:subtabela>
-             <Link href="/cadastro/membro">INSERIR</Link>
+
+<Link href="/cadastro/membro"><button style="padding: 5px;" >Inserir</button></Link>
 
         <form action="/" method="get">
                 <input :value="dados || ''" type="search" name="pesquisa">
@@ -42,14 +43,13 @@
       <td>{{ calcularPresenca(membro.presenca) }}%</td>
       <td id="inserir-verde">
         <form action="/inserir/dizimos" method="post">
-          @csrf
           <input type="hidden" name="membro_id" :value="membro.id">
           <input type="hidden" name="nome" :value="membro.nome">
           <input style="width: 100%; height: 100%; color: white;" type="submit" value="Inserir">
         </form>
       </td>
       <td id="X">
-        <a style="color: white; text-decoration: none;" :href="'/destroy/' + membro.id">X</a>
+        <Link style="color: white; text-decoration: none;" :href="'/destroy/' + membro.id">X</Link>
       </td>
     </tr>
   </table>
@@ -89,7 +89,7 @@ export default {
 
 
 
-<style scoped>
+<style>
 
     input[type=search] {
         width: 100%;
