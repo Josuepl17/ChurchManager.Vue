@@ -22,7 +22,7 @@
             &nbsp; Menu
         </h1>
 
-        <Link class="links-1" href="/cadastro/membro">
+        <Link class="links-1" href="/">
             <i><img src="public\botao-home.png" alt=""></i> &nbsp; <p>Home</p>
         </Link>
 
@@ -94,10 +94,8 @@
     </div>
     
 </template>
-<script setup >
-  import { Link } from '@inertiajs/vue3';
 
-</script>
+
 
 
 

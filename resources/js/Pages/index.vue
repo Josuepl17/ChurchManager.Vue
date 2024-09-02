@@ -4,10 +4,7 @@
 
 <!----------------------------------------------------------------------------------->
 <template v-slot:subtabela>
-        <a href="/cadastro/membro">
-  <button style="padding: 5px;">Inserir</button>
-</a>
-
+             <Link href="/cadastro/membro">INSERIR</Link>
 
         <form action="/" method="get">
                 <input :value="dados || ''" type="search" name="pesquisa">
@@ -74,16 +71,8 @@
 <script>
 
 
-
-
-
-import Layout from '@/Components/Layout.vue';
-
-
 export default {
-        components: {
-                Layout
-        },
+
 
         props: {
                 membros: Array, // Recebe a lista de membros como propriedade
@@ -94,8 +83,11 @@ export default {
                         return this.qtdEventos > 0 ? Math.round((presenca / this.qtdEventos) * 100) : 0;
                 },
         },
+
 }
 </script>
+
+
 
 <style scoped>
 

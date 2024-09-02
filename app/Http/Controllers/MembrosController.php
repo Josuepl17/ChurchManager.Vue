@@ -41,7 +41,8 @@ class MembrosController extends Controller
     {
         $empresas_id = auth()->user()->empresa_id;
         $razao_empresa = empresas::where('id', $empresas_id)->value('razao');
-        return view('paginas.formulario-membro', compact('razao_empresa'));
+
+        return Inertia::render('FormMembro', compact('razao_empresa'));
     }
 
     public function botao_inserir_membro(request $request)

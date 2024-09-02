@@ -55,17 +55,7 @@
 
 
 </template>
-<script>
 
-import Layout from '@/Components/Layout.vue';
-
-
-export default {
-        components:{
-                Layout
-        }
-}
-</script>
 
 <style>
 

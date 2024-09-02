@@ -1,9 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
 import '../css/layout.css';
-
 import { createApp, h } from 'vue';
-//import Layout from './Components/Layout.vue';
+import { Link } from '@inertiajs/vue3'; // importei o componenete 
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
@@ -11,7 +10,7 @@ import Layout from './Components/Layout.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-//Vue.component(Layout, [Layout]);
+
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -20,6 +19,8 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .component('layout', Layout)
+            .component('Link', Link ) // registrei o componente Link do imnertia 
             .mount(el);
     },
     progress: {
