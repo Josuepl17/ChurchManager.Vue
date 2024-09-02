@@ -369,3 +369,169 @@ i img{
     }
 
 }
+
+
+
+
+#subtabela form { /* Filtro por Data */
+    display: flex;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    
+}
+
+#subtabela form input {
+    border: none;
+    margin-right: 15px;
+    font-size: 13px;
+    padding: 2px;
+    height: 70%;
+    border-radius: 3px;
+}
+
+#subtabela a { /* Botoes Alem do Filtro */
+    margin-right: 15px;
+}
+
+
+/* Tabela */
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    background-color: #f5f5f5;
+    width: 100%;
+    margin-bottom: 20px;
+   
+  }
+  
+  th, td {
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+
+  }
+  
+  th {
+    background-color: var(--titulos);
+    color: #fff;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #ddd;
+  }
+  
+  tr:hover {
+    background-color: #ccc;
+  }
+
+  td form button {
+    all: unset;
+    width: 100%;
+    height: 100%;
+    
+}
+
+#inserir-verde{
+    width: 10%;
+    background-color: rgb(0, 98, 0);
+
+}
+
+#inserir-verde:active{
+    transform: translateY(5);
+
+}
+
+#inserir-verde a{
+    display: block;
+    height: 100%;
+    width: 100%;
+    
+    
+}
+
+#inserir-verde:hover{
+    background-color: rgb(0, 163, 0);
+    transition: 0.2s ease;
+}
+
+#X{
+    background-color: rgb(126, 0, 0);
+    color: white;
+}
+
+#X:hover{
+    background-color: red;
+    color: white;
+}
+
+table tr:first-child { /*Fixar no Topo a Primeira Linha da Tabela */
+    position: sticky;
+    top: -1;
+}
+
+
+/* Conteudo Apenas os dados da Tabela */
+#tabela-dados {
+    width: 100%;
+    height: 75%;
+    overflow: auto;
+}
+
+
+/* Div do Valor Total */
+#valor-total {
+    display: flex;
+    width: 100%;
+    background-color: var(--titulos);
+    color: white;
+    justify-content: flex-end;
+    align-items: center;
+    height: 5%;
+}
+
+#valor-total p {
+    margin-right: 10px;
+}
+
+/* Formulario de Inserção de Dados */
+#formulario-registro {
+    display: flex;
+    width: 100%;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    height: 16%;
+    flex-wrap: wrap;
+}
+
+#formulario-registro form label,
+#formulario-registro form label,
+#formulario-registro form input,
+#formulario-registro form button {
+    padding: 10px;
+}
+
+/* Div Conteudo da Flash Mensage */
+.flash-message{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   width: 100%;
+   height: 4%;
+   animation: fadeOut 3s forwards;
+   
+   
+}
+
+@keyframes fadeOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  

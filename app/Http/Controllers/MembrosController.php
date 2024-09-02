@@ -34,7 +34,7 @@ class MembrosController extends Controller
     public function index(Request $request)
     {
     
-        return Inertia::render('Layout');
+        return Inertia::render('index');
     }
 
     public function cadastro_membro()
