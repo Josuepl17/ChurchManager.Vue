@@ -23,39 +23,39 @@
         </h1>
 
         <Link class="links-1" href="/">
-            <i><img src="public\botao-home.png" alt=""></i> &nbsp; <p>Home</p>
+            <i><img src="/static/botao-home.png" alt=""></i> &nbsp; <p>Home</p>
         </Link>
 
         <Link class="links-2" href="/teste">
-            <i><img src="public\dinheiro.png" alt=""></i> &nbsp; <p>Ofertas</p>
+            <i><img src="/static/dinheiro.png" alt=""></i> &nbsp; <p>Ofertas</p>
         </Link>
 
         <Link class="links-3" href="/cadastro/membro">
-            <i><img src="public\despesas.png" alt=""></i> &nbsp; <p>Despesas</p>
+            <i><img src="/static/despesas.png" alt=""></i> &nbsp; <p>Despesas</p>
         </Link>
 
         <Link class="links-8" href="/cadastro/membro">
-            <i><img src="public\comparecimento.png" alt=""></i> &nbsp; <p>Presença</p>
+            <i><img src="/static/comparecimento.png" alt=""></i> &nbsp; <p>Presença</p>
         </Link>
 
         <Link class="links-4" href="/cadastro/membro">
-            <i><img src="public\pago.png" alt=""></i> &nbsp; <p>Resumo</p>
+            <i><img src="/static/pago.png" alt=""></i> &nbsp; <p>Resumo</p>
         </Link>
 
         <Link class="links-5" href="/cadastro/membro">
-            <i><img src="public\contrato.png" alt=""></i> &nbsp; <p>Caixa</p>
+            <i><img src="/static/contrato.png" alt=""></i> &nbsp; <p>Caixa</p>
         </Link>
 
         <Link class="links-6" href="/cadastro/membro">
-            <i><img src="public\sombra-de-usuario-masculino.png" alt=""></i> &nbsp; <p>Usuários</p>
+            <i><img src="/static/sombra-de-usuario-masculino.png" alt=""></i> &nbsp; <p>Usuários</p>
         </Link>
 
         <Link class="links-7" href="/cadastro/membro">
-            <i><img src="public\companhia.png" alt=""></i> &nbsp; <p>Selecionar Filial</p>
+            <i><img src="/static/companhia.png" alt=""></i> &nbsp; <p>Selecionar Filial</p>
         </Link>
 
         <Link class="links-9" href="/cadastro/membro">
-            <i><img src="public\simbolo-de-logout.png" alt=""></i> &nbsp; <p>Logout</p>
+            <i><img src="/static/simbolo-de-logout.png" alt=""></i> &nbsp; <p>Logout</p>
         </Link>   
 
 

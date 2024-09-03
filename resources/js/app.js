@@ -1,5 +1,3 @@
-//import '../css/layout.css';
-
 import { createApp, h } from 'vue';
 import { Link } from '@inertiajs/vue3'; // importei o componenete 
 import { createInertiaApp } from '@inertiajs/vue3';
