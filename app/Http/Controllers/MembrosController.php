@@ -27,13 +27,13 @@ class MembrosController extends Controller
     public function Atualizar(Request $request)
     {
 
-        User::where('id', auth()->id())->update(['empresa_id' => $request->id]);
+        User::where('id', Auth::id())->update(['empresa_id' => $request->id]);
         return redirect('/');
     }
 
     public function index(Request $request)
     {
-        $empresas_id = auth()->user()->empresa_id;
+        $empresas_id = Auth::user()->empresa_id;
         $dados = $request->pesquisa;
         $membros = membros::whereRaw('LOWER(nome) LIKE ?', ["%" . strtolower($dados) . "%"])->where('empresa_id', $empresas_id)->get();
         $qtdEventos = count(Eventos::all());
@@ -42,7 +42,7 @@ class MembrosController extends Controller
 
     public function cadastro_membro()
     {
-        $empresas_id = auth()->user()->empresa_id;
+        $empresas_id = Auth::user()->empresa_id;
         $razao_empresa = empresas::where('id', $empresas_id)->value('razao');
 
         return Inertia::render('FormMembro', compact('razao_empresa'));
@@ -52,7 +52,7 @@ class MembrosController extends Controller
     {
         $dados = $request->all();
         $dados['user_id'] = Auth::id();
-        $dados['empresa_id'] = auth()->user()->empresa_id;
+        $dados['empresa_id'] = Auth::user()->empresa_id;
         $dados =  array_map('strtoupper', array_map('strval', $dados));
         membros::create($dados);
         return redirect('/');
@@ -72,7 +72,7 @@ class MembrosController extends Controller
         $empresa_id = Auth::user();
         $razao_empresa = $empresa_id->empresas->first();
         $razao_empresa = $razao_empresa->razao;
-        $eventos = Eventos::where('empresa_id', auth()->user()->empresa_id)->get();
+        $eventos = Eventos::where('empresa_id', Auth::user()->empresa_id)->get();
         return view('paginas.eventos', compact('razao_empresa', 'eventos'));
     }
 
@@ -96,7 +96,7 @@ class MembrosController extends Controller
 
         $evento = Eventos::create([
             'user_id' => Auth::id(),
-            'empresa_id' => auth()->user()->empresa_id,
+            'empresa_id' => Auth::user()->empresa_id,
             'evento' => $request->input('evento'),
             'data' => $request->input('data'),
             'presentes' => $presentes,

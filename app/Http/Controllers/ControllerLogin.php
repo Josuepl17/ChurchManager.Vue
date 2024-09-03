@@ -99,11 +99,11 @@ class ControllerLogin extends Controller
 
     public function tela_usuarios()
     {
-        $user_id = auth()->user()->id;
+        $user_id = Auth::user()->id;
         $relacionamentos = user_empresas::where('user_id', $user_id)->pluck('empresa_id'); // peguei as empresas relacionadas ao meu usuario.
         $empresas = user_empresas::whereIn('empresa_id', $relacionamentos)->pluck('user_id'); // peguei todos os usuarios relacionados as empresas
         $users = User::whereIn('id', $empresas)
-            ->where('id', '!=', auth()->user()->id)
+            ->where('id', '!=', Auth::user()->id)
             ->get(); // busquei
 
         //$razao_empresa = empresas::where('id', auth()->user()->empresa_id)->value('razao');
@@ -112,7 +112,7 @@ class ControllerLogin extends Controller
 
     public function formulario_adicionar_usuario()
     {
-        $user_id = auth()->user()->id;
+        $user_id = Auth::user()->id;
         $dados = user_empresas::where('user_id', $user_id)->pluck('empresa_id');
         $empresas = empresas::whereIn('id', $dados)->get();
         return view('usuario-filial/usuario.adicionar_user', compact('empresas'));
@@ -128,7 +128,7 @@ class ControllerLogin extends Controller
         $user->nome = $request->user;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->empresa_id = auth()->user()->empresa_id;
+        $user->empresa_id = Auth::user()->empresa_id;;
         $user->save();
 
 
@@ -149,7 +149,7 @@ class ControllerLogin extends Controller
 
     public function formulario_editar_usuario(Request $request)
     {
-        $user_id = auth()->user()->id;
+        $user_id = Auth::user()->id;
         $dados = user_empresas::where('user_id', $user_id)->pluck('empresa_id');
         $empresas = empresas::whereIn('id', $dados)->get();
         $user_editar = User::find($request->user_id);
@@ -209,7 +209,7 @@ class ControllerLogin extends Controller
 
     public function selecionar_filial()
     {
-        $user_id = auth()->user()->id;
+        $user_id = Auth::user()->id;
         $relacionamentos = user_empresas::where('user_id', $user_id)->pluck('empresa_id');
         $empresas = empresas::whereIn('id', $relacionamentos)->get();
         return view('usuario-filial/filial.selecionar-filial', compact('empresas'));
@@ -218,12 +218,14 @@ class ControllerLogin extends Controller
 
     public function formulario_adicionar_empresa()
     {
-        $user_id = auth()->user()->id;
+        $user_id = Auth::user()->id;
         $relacionamentos = user_empresas::where('user_id', $user_id)->pluck('empresa_id'); // peguei as empresas relacionadas ao meu usuario.
         $users_id = user_empresas::whereIn('empresa_id', $relacionamentos)->pluck('user_id'); // peguei todos os usuarios relacionados as empresas
         $users = User::whereIn('id', $users_id)
-            ->where('id', '!=', auth()->user()->id)
+            ->where('id', '!=', Auth::user()->empresa_id)
             ->get(); // busquei
+
+        
 
         return view('usuario-filial/filial.cadastro-filial', compact('users'));
     }
@@ -251,7 +253,7 @@ class ControllerLogin extends Controller
 
         //relacionando usuario ADM
         $user_empresas = new user_empresas();
-        $user_empresas->user_id = auth()->user()->id;
+        $user_empresas->user_id = Auth::user()->id;
         $user_empresas->empresa_id = $empresa->id;
         $user_empresas->save();
 
@@ -276,7 +278,7 @@ class ControllerLogin extends Controller
             $codigo = rand(100000, 999999);
             Session()->put('codigo', $codigo);
             Session()->put('user_id', $user_id );
-            Mail::send(new MailEnvioEmail($codigo, $request->email));
+            Mail::send(new EnvioEmail($codigo, $request->email));
             return redirect('/recebe/codigo');
         } else {
             return back()->withInput()->withErrors(['email' => 'Esse email Não Está Cadastrado']);

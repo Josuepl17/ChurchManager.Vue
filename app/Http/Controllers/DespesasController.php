@@ -29,10 +29,10 @@ class DespesasController extends Controller
     {
         $dataIni = Session()->get('dataini') ?? '1000-01-01';
         $dataFi = Session()->get('datafi') ?? '5000-01-01';
-        $empresa_id = auth()->user()->empresa_id;
+        $empresa_id = Auth::user()->empresa_id;
     
         $dados = [
-            'descricao' => Descricao_despesas::where('empresa_id', auth()->user()->empresa_id)->orderBy('id', 'desc')->take(10)->get(),
+            'descricao' => Descricao_despesas::where('empresa_id', $empresa_id)->orderBy('id', 'desc')->take(10)->get(),
             'despesas' => despesas::where('empresa_id', $empresa_id)->whereBetween('data', [$dataIni, $dataFi])->get(),
             'totaldespesas' => despesas::where('empresa_id', $empresa_id)->whereBetween('data', [$dataIni, $dataFi])->sum('valor'),
             'datanow' => Carbon::now()->format('Y-m-d'),
@@ -56,7 +56,7 @@ public function filtro(Request $request){
 
         if(Descricao_despesas::where('descricao_despesas', $request->descricao)->first() == null){
             $descricao = new Descricao_despesas();
-            $descricao->empresa_id = auth()->user()->empresa_id;
+            $descricao->empresa_id =  Auth::user()->empresa_id;
             $descricao->descricao_despesas = $request->descricao;
             $descricao->save();
         }
