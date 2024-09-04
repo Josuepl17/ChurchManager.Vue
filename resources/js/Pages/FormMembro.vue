@@ -62,7 +62,7 @@ const form = useForm({
 </script>
 
 
-<style>
+<style scoped >
 /* Estilos para o formulário */
 form {
     display: flex;

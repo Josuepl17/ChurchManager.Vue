@@ -3,7 +3,7 @@
 <layout>
 
 <!----------------------------------------------------------------------------------->
-<template v-slot:subtabela>
+<template #subtabela>
 
 <Link href="/cadastro/membro"><button style="padding: 5px;" >Inserir</button></Link>
 
@@ -110,5 +110,7 @@ export default {
         box-sizing: border-box;
 
     }
+
+    
 </style>
 
