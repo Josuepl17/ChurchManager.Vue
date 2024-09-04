@@ -42,7 +42,7 @@
       <td>{{ membro.telefone }}</td>
       <td>{{ calcularPresenca(membro.presenca) }}%</td>
       <td id="inserir-verde">
-        <form action="/inserir/dizimos" method="post">
+        <form @submit.prevent="form.post('/inserir/dizimos')">
           <input type="hidden" name="membro_id" :value="membro.id">
           <input type="hidden" name="nome" :value="membro.nome">
           <input style="width: 100%; height: 100%; color: white;" type="submit" value="Inserir">
@@ -70,8 +70,16 @@
 </template>
 <script>
 
+import { useForm } from '@inertiajs/vue3'
+
+const form = useForm({
+  membro_id: null,
+  nome: null, 
+})
 
 export default {
+
+  
 
 
         props: {
@@ -83,6 +91,8 @@ export default {
                         return this.qtdEventos > 0 ? Math.round((presenca / this.qtdEventos) * 100) : 0;
                 },
         },
+
+        
 
 }
 </script>

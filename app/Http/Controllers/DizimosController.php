@@ -21,6 +21,7 @@ use GuzzleHttp\Promise\Create;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Inertia\Inertia;
 
 class DizimosController extends Controller
 {
@@ -45,7 +46,7 @@ public $membro_id;
             'razao_empresa' => empresas::where('id', $empresa_id)->value('razao')
         ];
 
-            return view('paginas.dizimo', $dados);
+            return Inertia::render('dizimos', compact('dados'));
     }
 
 //......................................................Parte 2................................................//

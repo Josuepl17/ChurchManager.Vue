@@ -96,8 +96,8 @@
 </template>
 
 <style>
-@import "resources\js\Components\css\layout.css";
-@import "resources\js\Components\css\oferta-dizimo-despesas-caixa.css";
+@import "..\Components\css\layout.css";
+@import "..\Components\css\oferta-dizimo-despesas-caixa.css";
 </style>
 
 
