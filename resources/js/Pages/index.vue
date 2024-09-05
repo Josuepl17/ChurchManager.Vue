@@ -42,11 +42,7 @@
       <td>{{ membro.telefone }}</td>
       <td>{{ calcularPresenca(membro.presenca) }}%</td>
       <td id="inserir-verde">
-        <form @submit.prevent="form.post('/inserir/dizimos')">
-          <input type="hidden" name="membro_id" :value="membro.id">
-          <input type="hidden" name="nome" :value="membro.nome">
-          <input style="width: 100%; height: 100%; color: white;" type="submit" value="Inserir">
-        </form>
+        <Link style="color: white; text-decoration: none;" :href="'/inserir/dizimos/' + membro.id + '/' + membro.nome">Cadastrar</Link>
       </td>
       <td id="X">
         <Link style="color: white; text-decoration: none;" :href="'/destroy/' + membro.id">X</Link>
@@ -76,6 +72,7 @@ const form = useForm({
   membro_id: null,
   nome: null, 
 })
+
 
 export default {
 

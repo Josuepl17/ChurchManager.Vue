@@ -44,7 +44,7 @@ Route::get('/lista/presencas', [MembrosController::class, 'presença_evento']);
 Route::post('/presenca/evento', [MembrosController::class, 'regitrar_presenca']);
 
                             /*Dizimos Por Usuario*/
-Route::post('/inserir/dizimos', [DizimosController::class, 'filtro']);
+Route::get('/inserir/dizimos/{membro_id}/{nome}', [DizimosController::class, 'filtro']);
 Route::post('/registrar/dizimo', [DizimosController::class, 'botao_registrar_dizimo']);
 Route::post('/dizimos/destoy/id', [DizimosController::class, 'botao_excluir_dizimo']);
 Route::get('/tela/dizimos', [DizimosController::class, 'filter_page']);

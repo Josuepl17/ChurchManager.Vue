@@ -18,7 +18,7 @@
 
 <template v-slot:conteudo>
         <div class="conteudo" >
-            <form @submit.prevent="form.post('/inserir/membro')">
+    <form @submit.prevent="form.post('/inserir/membro')">
     <input v-model="form.nome" type="text" name="nome" id="nome" autocomplete="off" required placeholder="Nome:">
     <input v-model="form.sobrenome" type="text" name="sobrenome" id="sobrenome" autocomplete="off" required placeholder="Sobrenome:">
     <input v-model="form.funcao" type="text" list="funcao" name="funcao" placeholder="Função">
@@ -62,7 +62,7 @@ const form = useForm({
 </script>
 
 
-<style scoped >
+<style scoped>
 /* Estilos para o formulário */
 form {
     display: flex;

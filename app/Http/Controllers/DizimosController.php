@@ -28,11 +28,11 @@ class DizimosController extends Controller
     /*Dizimos Por Usuario*/
 
 //......................................................Parte 1................................................//
-public $membro_id;
+
 
     public function filter_page()
     {
-
+       
         $dataIni = Session()->get('dataini_d') ?? '1000-01-01';
         $dataFi = Session()->get('datafi_d') ?? '5000-01-01';
         $empresa_id = Auth::user()->empresa_id;
@@ -46,7 +46,8 @@ public $membro_id;
             'razao_empresa' => empresas::where('id', $empresa_id)->value('razao')
         ];
 
-            return Inertia::render('dizimos', compact('dados'));
+    
+            return Inertia::render('Dizimos');
     }
 
 //......................................................Parte 2................................................//

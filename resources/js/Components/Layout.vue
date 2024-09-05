@@ -81,11 +81,7 @@
         </div> <!--conteudo-->
 
 
-        <div id="valor-registrar">
-            <p>
-                <slot name="valor-registrar"></slot>
-            </p>
-        </div> <!--valor-registrar-->
+
 
 
 </div> <!--subtabela-conteudo-->
