@@ -17,6 +17,7 @@
   
   <template v-slot:titulo-pagina>
   
+    DIZIMOS {{props.nome}}
   
   </template> <!--titulo-pagina-->
   <!----------------------------------------------------------------------------------->        
@@ -31,12 +32,13 @@
         <th>VALOR</th>
         <th style="width: 4%;">X</th>
       </tr>
-      <tr v-for="dizimo in dizimos" :key="dizimo.id">
+      <tr v-for="dizimo in dados.dizimos" :key="dizimo.id">
         <td style="background-color: var(--titulos); color: white">{{ dizimo.id }}</td>
-        <td>{{ formatDate(dizimo.data) }}</td>
-        <td>R${{ formatCurrency(dizimo.valor) }}</td>
+        <td>{{ dizimo.datereg }}</td>
+        <td>R${{ dizimo.valor }}</td>
         <td id="X">
-          <form @submit.prevent="deleteDizimo(dizimo.id)">
+          <form @submit.prevent="form.post('/registrar/dizimo')">
+
             <button class="excluir">X</button>
           </form>
         </td>
@@ -50,34 +52,42 @@
 
 
   <div id="formulario-registro">
-    <form @submit.prevent="registrarDizimo">
-      <input type="hidden" name="membro_id" :value="membroId">
-      <input type="hidden" name="nome" :value="nome">
-      <input type="date" name="data" v-model="data" autocomplete="off" required>
-      <input type="number" name="valor" step="0.01" v-model="valor" autocomplete="off" required placeholder="Valor:">
-      <input type="hidden" name="dataini" :value="dataini">
-      <input type="hidden" name="datafi" :value="datafi">
+    <form @submit.prevent="form.post('/registrar/dizimo')">
+      <input type="date" name="datareg" v-model="form.datereg" autocomplete="off" required>
+      <input type="number" name="valor" step="0.01" v-model="form.valor" autocomplete="off" required placeholder="Valor:">
       <button type="submit">Registrar Dízimo</button>
     </form>
   </div>
-
-  </template> <!--conteudo-->
-
-
-
-          
+  </template> <!--conteudo-->   
   </layout>
   
-  
-  
   </template>
-  <script>
-  
 
-  
-  
+<script setup>
 
-  </script>
+import { useForm } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  dados: Object,
+  membro_id: Number,
+  nome: String,
+  dataini: String,
+  datafi: String,
+});
+
+
+
+// Inicialize o formulário com os dados recebidos como props
+const form = useForm({
+  membro_id: props.membro_id || '',
+  nome: props.nome || '',
+  datereg: '',
+  valor: '',
+  dataini: props.dataini || '',
+  datafi: props.datafi || '',
+});
+</script>
 
 
   <style lang="">
