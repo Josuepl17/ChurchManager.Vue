@@ -75,7 +75,7 @@ class OfertasController extends Controller
 
     public function botao_excluir_oferta(request $request)
     {
-        if (MeuServico::Verificar($request->data)) { //verifica se as data esta entre as duas datas do caixa
+        if (MeuServico::Verificar($request->datereg)) { //verifica se as data esta entre as duas datas do caixa
             $destroy = $request->id;
             ofertas::destroy($destroy); // apaga o registro que tenha esse ID
             Session()->flash('sucesso',  'Item Apagado com Sucesso');

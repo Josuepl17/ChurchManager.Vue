@@ -4,11 +4,9 @@
   
   <!----------------------------------------------------------------------------------->
   <template v-slot:subtabela>
-    <form action="/inserir/dizimos" method="post">   
-    <input type="hidden" name="membro_id" value="{{Session()->get('membro_id')}}">
-    <input type="hidden" name="nome" value="{{Session()->get('nome')}}">
-    <input type="date" name="dataini" id="dataini" value="{{Session()->get('dataini_d')}}" required>
-    <input type="date" name="datafi" id="datafi" value="{{Session()->get('datafi_d')}}" required>
+    <form @submit.prevent="form.post('/inserir/dizimos')">   
+    <input type="date" name="dataini" id="dataini" v-model="form.dataini" required>
+    <input type="date" name="datafi" id="datafi" v-model="form.datafi" required>
     <input style="width: 65px;" type="submit" value="Filtrar">
 </form>
   </template> <!--subtabela-->
@@ -84,8 +82,8 @@ const form = useForm({
   nome: props.nome || '',
   datereg: '',
   valor: '',
-  dataini: props.dataini || '',
-  datafi: props.datafi || '',
+  dataini: '' || props.dataini,
+  datafi: '' || props.datafi,
 });
 </script>
 

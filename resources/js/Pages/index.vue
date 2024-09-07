@@ -40,9 +40,13 @@
       <td class="remover">{{ membro.endereco }}</td>
       <td>{{ membro.funcao }}</td>
       <td>{{ membro.telefone }}</td>
-      <td>{{ calcularPresenca(membro.presenca) }}%</td>
+      <td></td>
       <td id="inserir-verde">
-        <Link style="color: white; text-decoration: none;" :href="'/inserir/dizimos/' + membro.id + '/' + membro.nome">Cadastrar</Link>
+        <form @submit.prevent="form.post('/inserir/dizimos')">
+          <input type="hidden" name="membro_id" :value="form.membro_id">
+          <input type="hidden" name="nome" :value="form.nome">
+          <button type="submit" @click="handleClick(membro)">Inserir</button>
+        </form>
       </td>
       <td id="X">
         <Link style="color: white; text-decoration: none;" :href="'/destroy/' + membro.id">X</Link>
@@ -68,30 +72,31 @@
 
 import { useForm } from '@inertiajs/vue3'
 
-const form = useForm({
-  membro_id: null,
-  nome: null, 
-})
-
-
 export default {
+  props: {
+    membros: Array, // Recebe a lista de membros como propriedade
+    qtdEventos: Number, // Recebe a quantidade de eventos como propriedade
+  },
+  setup() {
+    const form = useForm({
+      membro_id: null,
+      nome: null,
+    });
 
-  
+    // Define o método handleClick
+    function handleClick(membro) {
+      form.membro_id = membro.id;
+      form.nome = membro.nome;
+    }
 
-
-        props: {
-                membros: Array, // Recebe a lista de membros como propriedade
-                qtdEventos: Number, // Recebe a quantidade de eventos como propriedade
-        },
-        methods: {
-                calcularPresenca(presenca) {
-                        return this.qtdEventos > 0 ? Math.round((presenca / this.qtdEventos) * 100) : 0;
-                },
-        },
-
-        
-
+    // Retorna form e handleClick para uso no template
+    return {
+      form,
+      handleClick
+    };
+  }
 }
+
 </script>
 
 
