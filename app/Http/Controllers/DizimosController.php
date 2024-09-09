@@ -103,9 +103,10 @@ class DizimosController extends Controller
 
 //......................................................Parte 3................................................//
 
-    public function botao_excluir_dizimo(request $request)
-    {
-        if (MeuServico::Verificar($request->data)) {
+    public function botao_excluir_dizimo(request $request) {
+            $data = dizimos::find($request->id);
+            
+        if (MeuServico::Verificar($data->datereg)) {
             $destroy = $request->id;
             dizimos::destroy($destroy);
             Session()->flash('sucesso',  'Item Apagado com Sucesso');

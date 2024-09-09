@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class OfertasController extends Controller
 {
@@ -25,27 +26,37 @@ class OfertasController extends Controller
     //......................................................Parte 1................................................//
     public function filter_page()
     {
-        
-        $dataIni = Session()->get('dataini') ?? '1000-01-01'; // Se tem requisção ele usa e não tem o padrão é 1900-01-01 
-        $dataFi = Session()->get('datafi') ?? '5000-01-01'; // Se tem requisção ele usa e não tem o padrão é 5000-01-01 
+
+        $dataini = Session()->get('dataini'); // Se tem requisção ele usa e não tem o padrão é 1900-01-01 
+        $datafi = Session()->get('datafi'); // Se tem requisção ele usa e não tem o padrão é 5000-01-01 
         $empresa_id = Auth::user()->empresa_id; // acessa o dado da coluna do usuario conectado
 
 
-        $dados = [ // Pega todas as variaveis em m lugar só
-            'ofertas' => ofertas::where('empresa_id', $empresa_id)->whereBetween('data', [$dataIni, $dataFi])->get(),
-            'totalofertas' => ofertas::where('empresa_id', $empresa_id)->whereBetween('data', [$dataIni, $dataFi])->sum('valor'),
+        $queryOfertas = ofertas::where('empresa_id', $empresa_id);
+
+        // Adicionando o filtro de datas somente se ambas as datas forem definidas
+        if ($dataini && $datafi) {
+            $queryOfertas->whereBetween('datereg', [$dataini, $datafi]);
+        }
+
+        // Executando as consultas e formatando os dados
+        $dados = [
+            'ofertas' => $queryOfertas->get(),
+            'totalofertas' => $queryOfertas->clone()->sum('valor'), // Usando clone para evitar modificar a consulta original
             'datanow' => Carbon::now()->format('Y-m-d'),
             'razao_empresa' => empresas::where('id', $empresa_id)->value('razao')
         ];
 
-        return view('paginas.oferta', $dados);
+
+        return Inertia::render('Ofertas', compact('dados', 'dataini', 'datafi'));
     }
 
 
 
     //......................................................Parte 2................................................//
 
-    public function filtro (Request $request){
+    public function filtro(Request $request)
+    {
         Session()->flash('dataini', $request->dataini);
         Session()->flash('datafi', $request->datafi);
         return redirect('/oferta');
@@ -53,7 +64,7 @@ class OfertasController extends Controller
 
     public function registrar_oferta(request $request)
     {
-        if (MeuServico::Verificar($request->data)) { // verifica se as data esta entre as duas datas do caixa
+        if (MeuServico::Verificar($request->datereg)) { // verifica se as data esta entre as duas datas do caixa
             $dados = $request->all();
             $dados['user_id'] = Auth::id(); // acessa o ID do usuario Autenticado e inseri na variavel dados
             $dados['empresa_id'] = Auth::user()->empresa_id; // acessa o dado da coluna do usuario conectado e inseri na variavel dados
@@ -64,7 +75,7 @@ class OfertasController extends Controller
         } else {
             Session()->flash('falha',  'Falha ao criar item, Caixa Fechado'); // Retorna Falha
         }
-        
+
         Session()->flash('dataini', $request->dataini);
         Session()->flash('datafi', $request->datafi);
 
@@ -75,7 +86,8 @@ class OfertasController extends Controller
 
     public function botao_excluir_oferta(request $request)
     {
-        if (MeuServico::Verificar($request->datereg)) { //verifica se as data esta entre as duas datas do caixa
+        $data = ofertas::find($request->id);
+        if (MeuServico::Verificar($data->datereg)) { //verifica se as data esta entre as duas datas do caixa
             $destroy = $request->id;
             ofertas::destroy($destroy); // apaga o registro que tenha esse ID
             Session()->flash('sucesso',  'Item Apagado com Sucesso');

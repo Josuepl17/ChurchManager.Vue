@@ -18,7 +18,7 @@ return new class extends Migration
             
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade')->onUpdate('cascade');
-            $table->date('data');
+            $table->date('datereg');
             $table->decimal('valor', 8, 2);
             $table->timestamps();
 

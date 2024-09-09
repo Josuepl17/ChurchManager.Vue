@@ -35,17 +35,14 @@
         <td>{{ dizimo.datereg }}</td>
         <td>R${{ dizimo.valor }}</td>
         <td id="X">
-          <form @submit.prevent="form.post('/registrar/dizimo')">
-
-            <button class="excluir">X</button>
-          </form>
+          <Link style="color: white; text-decoration: none;" :href="'/dizimos/destoy/' + dizimo.id">X</Link>
         </td>
       </tr>
     </table>
   </div> 
 
   <div id="valor-total">
-    <p>VALOR TOTAL: R$ <span style="color: green; font-weight: bold;">1000</span></p>
+    <p>VALOR TOTAL: R$ <span style="color: green; font-weight: bold;">{{dados.totaldizimos}},00</span></p>
   </div>
 
 

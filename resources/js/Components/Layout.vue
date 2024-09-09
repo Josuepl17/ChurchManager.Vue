@@ -26,7 +26,7 @@
             <i><img src="/static/botao-home.png" alt=""></i> &nbsp; <p>Home</p>
         </Link>
 
-        <Link class="links-2" href="/teste">
+        <Link class="links-2" href="/oferta">
             <i><img src="/static/dinheiro.png" alt=""></i> &nbsp; <p>Ofertas</p>
         </Link>
 
