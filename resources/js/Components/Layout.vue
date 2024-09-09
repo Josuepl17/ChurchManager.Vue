@@ -30,7 +30,7 @@
             <i><img src="/static/dinheiro.png" alt=""></i> &nbsp; <p>Ofertas</p>
         </Link>
 
-        <Link class="links-3" href="/cadastro/membro">
+        <Link class="links-3" href="/despesas">
             <i><img src="/static/despesas.png" alt=""></i> &nbsp; <p>Despesas</p>
         </Link>
 

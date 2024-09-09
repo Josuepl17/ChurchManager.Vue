@@ -19,55 +19,71 @@ use Carbon\Carbon;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 use PhpParser\Node\Stmt\Else_;
 
 class DespesasController extends Controller
 {
 
-//......................................................Parte 1................................................//
+    //......................................................Parte 1................................................//
     public function filter_page()
     {
-        $dataIni = Session()->get('dataini') ?? '1000-01-01';
-        $dataFi = Session()->get('datafi') ?? '5000-01-01';
+        $dataini = Session()->get('dataini');
+        $datafi = Session()->get('datafi');
         $empresa_id = Auth::user()->empresa_id;
-    
+
+        // Inicializando a consulta para Descricao_despesas
+        $queryDescricao = Descricao_despesas::where('empresa_id', $empresa_id)->orderBy('id', 'desc')->take(10);
+
+        // Inicializando a consulta para Despesas
+        $queryDespesas = despesas::where('empresa_id', $empresa_id);
+
+        // Adicionando o filtro de datas somente se ambas as datas forem definidas
+        if ($dataini && $datafi) {
+            $queryDespesas->whereBetween('datereg', [$dataini, $datafi]);
+        }
+
+        // Executando as consultas e formatando os dados
         $dados = [
-            'descricao' => Descricao_despesas::where('empresa_id', $empresa_id)->orderBy('id', 'desc')->take(10)->get(),
-            'despesas' => despesas::where('empresa_id', $empresa_id)->whereBetween('data', [$dataIni, $dataFi])->get(),
-            'totaldespesas' => despesas::where('empresa_id', $empresa_id)->whereBetween('data', [$dataIni, $dataFi])->sum('valor'),
+            'descricao' => $queryDescricao->get(),
+            'despesas' => $queryDespesas->get(),
+            'totaldespesas' => $queryDespesas->clone()->sum('valor'), // Usando clone para evitar modificar a consulta original
             'datanow' => Carbon::now()->format('Y-m-d'),
             'razao_empresa' => empresas::where('id', $empresa_id)->value('razao')
         ];
 
-        return view('paginas.despesas', $dados);
+
+        return Inertia::render('Despesas', compact('dados', 'dataini', 'datafi'));
     }
 
 
 
-//......................................................Parte 2................................................//
+    //......................................................Parte 2................................................//
 
-public function filtro(Request $request){
-    Session()->flash('dataini', $request->dataini);
-    Session()->flash('datafi', $request->datafi);
-    return redirect('/despesas');
-}
+    public function filtro(Request $request)
+    {
+
+        Session()->flash('dataini', $request->dataini);
+        Session()->flash('datafi', $request->datafi);
+        return redirect('/despesas');
+    }
     public function botao_registrar_despesas(request $request)
     {
 
-        if(Descricao_despesas::where('descricao_despesas', $request->descricao)->first() == null){
+        if (Descricao_despesas::where('descricao_despesas', $request->descricao)->first() == null) {
             $descricao = new Descricao_despesas();
             $descricao->empresa_id =  Auth::user()->empresa_id;
             $descricao->descricao_despesas = $request->descricao;
             $descricao->save();
         }
 
-        if (MeuServico::Verificar($request->data) == true) {
+        if (MeuServico::Verificar($request->datereg) == true) {
             $dados = $request->all();
             $dados['user_id'] = Auth::id(); //acessa o ID do usuario Autenticado
             $dados['empresa_id'] = Auth::user()->empresa_id; // acessa o dado da coluna do usuario conectado
             $dados['valor'] = str_replace(',', '.', $dados['valor']);
             despesas::create($dados);
-            
+
             Session()->flash('sucesso', 'Item criado com Sucesso');
         } else {
             Session()->flash('falha',  'Falha ao criar item, Caixa Fechado');
@@ -75,17 +91,18 @@ public function filtro(Request $request){
 
         Session()->flash('dataini', $request->dataini);
         Session()->flash('datafi', $request->datafi);
-        
-        return redirect('/despesas');
 
+        return redirect('/despesas');
     }
 
-//......................................................Parte 3................................................//
+    //......................................................Parte 3................................................//
 
     public function botao_excluir_despesas(request $request)
     {
-        if (MeuServico::Verificar($request->data)) {
+        $data = despesas::find($request->id);
+        if (MeuServico::Verificar($data->datereg)) {
             $destroy = $request->id;
+
             despesas::destroy($destroy);
             Session()->flash('sucesso',  'Item Apagado com Sucesso');
         } else {

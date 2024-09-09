@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class despesas extends Model
 {
     use HasFactory;
-    protected $fillable = ['data', 'descricao', 'valor', 'user_id', 'empresa_id'];
+    protected $fillable = ['datereg', 'descricao', 'valor', 'user_id', 'empresa_id'];
 
 
     public function empresas(){

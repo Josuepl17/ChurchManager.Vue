@@ -59,7 +59,7 @@ Route::get('/filtrar/ofertas', [OfertasController::class, 'filtro'])->middleware
                             /* Despesas */
 Route::get('/despesas', [DespesasController::class, 'filter_page']);
 Route::POST('/registrar/despesas/igreja', [DespesasController::class, 'botao_registrar_despesas']);
-Route::POST('/destroy/despesas/id', [DespesasController::class, 'botao_excluir_despesas']);
+Route::get('/destroy/despesas/{id}', [DespesasController::class, 'botao_excluir_despesas']);
 Route::post('/filtrar/despesas', [DespesasController::class, 'filtro']);
 
                                 /*Caixa*/
