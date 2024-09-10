@@ -73,7 +73,7 @@ class MembrosController extends Controller
         $razao_empresa = $empresa_id->empresas->first();
         $razao_empresa = $razao_empresa->razao;
         $eventos = Eventos::where('empresa_id', Auth::user()->empresa_id)->get();
-        return view('paginas.eventos', compact('razao_empresa', 'eventos'));
+        return Inertia::render('Eventos', compact('eventos'));
     }
 
     public function presença_evento()
@@ -82,12 +82,12 @@ class MembrosController extends Controller
         $empresa_id = Auth::user();
         $razao_empresa = $empresa_id->empresas->first();
         $razao_empresa = $razao_empresa->razao;
-        return view('paginas.formulario_presenca', compact('membros', 'razao_empresa'));
+        return Inertia::render('Presenca', compact('membros'));
     }
 
     public function regitrar_presenca(Request $request)
     {
-
+        //dd($request->all());
         $membros = membros::where('empresa_id', Auth::user()->empresa_id)->count();
         $presentes = $request->input('presenca');
         $presentes = count($presentes);
@@ -98,7 +98,7 @@ class MembrosController extends Controller
             'user_id' => Auth::id(),
             'empresa_id' => Auth::user()->empresa_id,
             'evento' => $request->input('evento'),
-            'data' => $request->input('data'),
+            'datereg' => $request->input('datereg'),
             'presentes' => $presentes,
             'faltantes' => $faltantes
         ]);

@@ -34,7 +34,7 @@
             <i><img src="/static/despesas.png" alt=""></i> &nbsp; <p>Despesas</p>
         </Link>
 
-        <Link class="links-8" href="/cadastro/membro">
+        <Link class="links-8" href="/eventos">
             <i><img src="/static/comparecimento.png" alt=""></i> &nbsp; <p>Presença</p>
         </Link>
 
