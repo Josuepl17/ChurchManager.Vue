@@ -54,6 +54,14 @@ Ofertas
         <button type="submit">Registar Oferta</button>
     </form>
 </div>
+
+<div v-if="flash.sucesso" class="flash-message" style="background-color: rgb(0, 77, 0);">
+        <p>{{ flash.sucesso }}</p>
+</div>
+
+<div v-if="flash.falha" class="flash-message" style="background-color: red;">
+    <p>{{ flash.falha }}</p>
+    </div>
      
 </template> <!--conteudo-->
 
@@ -72,6 +80,7 @@ const props = defineProps({
   dados: Object,
   dataini: String,
   datafi: String,
+  flash: Object,
 });
 
 
