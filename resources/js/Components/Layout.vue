@@ -38,11 +38,11 @@
             <i><img src="/static/comparecimento.png" alt=""></i> &nbsp; <p>Presença</p>
         </Link>
 
-        <Link class="links-4" href="/cadastro/membro">
+        <Link class="links-4" href="/relatorio">
             <i><img src="/static/pago.png" alt=""></i> &nbsp; <p>Resumo</p>
         </Link>
 
-        <Link class="links-5" href="/cadastro/membro">
+        <Link class="links-5" href="/indexcaixa">
             <i><img src="/static/contrato.png" alt=""></i> &nbsp; <p>Caixa</p>
         </Link>
 
