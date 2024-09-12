@@ -78,8 +78,7 @@ class CaixasController extends Controller
 //......................................................Parte 3................................................//
 
     public function fechar_caixa(Request $request)
-    {
-        dd($request->all());
+    {   //dd($request->all());
 
         if (MeuServico::Verificar($request->dataini) & MeuServico::Verificar($request->datafi)) {
             $dados = $request->except('_token');
@@ -104,7 +103,7 @@ class CaixasController extends Controller
         $dados = caixas::where('empresa_id', $empresa_id)->get();
         $razao_empresa = empresas::where('id', $empresa_id)->value('razao');
         $saldo = caixas::where('empresa_id', $empresa_id)->sum('saldo');;
-        return view('paginas.caixa', compact('dados', 'saldo', 'razao_empresa'));
+        return Inertia::render('Caixa', compact('dados', 'saldo', 'razao_empresa'));
     }
 
     public function destroy_caixa(Request $request)

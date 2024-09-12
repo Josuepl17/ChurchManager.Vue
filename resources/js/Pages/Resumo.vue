@@ -109,6 +109,7 @@ const form = useForm({
   totalofertas: props.dados.totalofertas,
   totaldespesas: props.dados.totaldespesas,
   saldo: props.saldo,
+  totaldizimos: props.dados.totaldizimos,
 });
 
 
