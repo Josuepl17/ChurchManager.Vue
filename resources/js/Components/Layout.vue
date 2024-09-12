@@ -91,6 +91,26 @@
     
 </template>
 
+
+<script>
+        // Seleciona todos os links com a classe 'link'
+        const links = document.querySelectorAll('.link');
+
+        // Adiciona um evento de clique a cada link
+        links.forEach(link => {
+            link.addEventListener('click', function(event) {
+                // Previne o comportamento padrão do link
+                event.preventDefault();
+
+                // Remove a classe 'selected' de todos os links
+                links.forEach(link => link.classList.remove('selected'));
+
+                // Adiciona a classe 'selected' ao link clicado
+                this.classList.add('selected');
+            });
+        });
+    </script>
+
 <style>
 @import "..\Components\css\layout.css";
 @import "..\Components\css\oferta-dizimo-despesas-caixa.css";

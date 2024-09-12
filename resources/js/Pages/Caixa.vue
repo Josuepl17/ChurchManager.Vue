@@ -37,8 +37,8 @@ Caixa
             <td>R$ {{dado.totalofertas}}</td>
             <td>R$ {{dado.totaldespesas}}</td>
             <td>R$ {{dado.saldo}}</td>
-            <td>
- 
+            <td id="X" >
+                <Link style="color: white; text-decoration: none;" :href="'/destroy/caixa/' + dado.id">X</Link>
             </td>
         </tr>   
 
@@ -52,12 +52,6 @@ Caixa
         </div>       
 </template> <!--conteudo-->
 
-<!----------------------------------------------------------------------------------->
-<template v-slot:valor-registrar>
-
-</template> <!--valor-registrar-->
-
-<!----------------------------------------------------------------------------------->
         
 </layout>
 

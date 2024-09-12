@@ -110,7 +110,7 @@ class CaixasController extends Controller
     {
         $destroy = $request->id;
         caixas::destroy($destroy);
-        return redirect()->back();
+        return redirect('/indexcaixa');
     }
 
 

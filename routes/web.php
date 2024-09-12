@@ -70,7 +70,7 @@ Route::post('/filtro/pdf', [CaixasController::class, 'filter_page']);
 Route::get('/gerar/{dataini}/{datafi}', [CaixasController::class, 'gerar']);
 Route::post('/fechar', [CaixasController::class, 'fechar_caixa']);
 Route::get('/indexcaixa', [CaixasController::class, 'indexcaixa']);
-Route::post('/destroy/caixa/{id}', [CaixasController::class, 'destroy_caixa']);
+Route::get('/destroy/caixa/{id}', [CaixasController::class, 'destroy_caixa']);
 
 
                              /* LOGIN*/
