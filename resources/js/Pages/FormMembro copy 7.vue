@@ -33,7 +33,7 @@
 </template>
 <script>
 
-import Layout from '@/Components/Layout.vue';
+import Layout from '@/Layouts/Layout.vue';
 
 
 export default {

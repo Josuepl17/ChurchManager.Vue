@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/vue3'; // importei o componenete
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-import Layout from './Components/Layout.vue';
+import Layout from './Layouts/Layout.vue';
 import { useForm } from '@inertiajs/vue3';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
