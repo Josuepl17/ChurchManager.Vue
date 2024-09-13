@@ -7,8 +7,9 @@
 
 <Link href="/cadastro/membro"><button style="padding: 5px;" >Inserir</button></Link>
 
-        <form action="/" method="get">
-                <input :value="dados || ''" type="search" name="pesquisa">
+        <form @submit.prevent="form.get('/')">
+                <input v-model="form.pesquisa" type="search" name="pesquisa">
+                <input type="submit" value="Buscar">
 
 </form>
 
@@ -81,6 +82,7 @@ export default {
     const form = useForm({
       membro_id: null,
       nome: null,
+      pesquisa: '',
     });
 
     // Define o método handleClick
