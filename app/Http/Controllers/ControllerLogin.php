@@ -28,6 +28,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Inertia\Inertia;
 use PhpParser\Node\Expr\Cast\Object_;
 use PhpParser\Node\Expr\FuncCall;
 
@@ -38,7 +39,7 @@ class ControllerLogin extends Controller
 
     public function login()
     {
-        return view('usuario-filial/login.login');
+        return Inertia::render('Login');
     }
 
     public function formulario_usuario_empresa()

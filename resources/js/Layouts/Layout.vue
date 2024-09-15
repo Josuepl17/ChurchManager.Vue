@@ -46,17 +46,17 @@
             <i><img src="/static/contrato.png" alt=""></i> &nbsp; <p>Caixa</p>
         </Link>
 
-        <Link class="links-6" href="/user/profile">
+        <a class="links-6" href="/user/profile">
             <i><img src="/static/sombra-de-usuario-masculino.png" alt=""></i> &nbsp; <p>Usuários</p>
-        </Link>
+        </a>
 
-        <Link class="links-7" href="/selecionar/filial">
+        <a class="links-7" href="/selecionar/filial">
             <i><img src="/static/companhia.png" alt=""></i> &nbsp; <p>Selecionar Filial</p>
-        </Link>
+        </a>
 
-        <Link class="links-9" href="/logout">
+        <a class="links-9" href="/logout">
             <i><img src="/static/simbolo-de-logout.png" alt=""></i> &nbsp; <p>Logout</p>
-        </Link>   
+        </a>   
 
 
     </div> <!--menu-->
