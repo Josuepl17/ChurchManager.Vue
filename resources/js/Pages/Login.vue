@@ -1,40 +1,40 @@
 <template lang="">
 
-<div class="login-box">
-    <h2>Entre</h2>
-
-    <form @submit.prevent="form.post('/login/if')">
-
-   
-      <div class="user-box">
-        <input type="text" name="email" id="email" v-model="form.email" >
-        <label>Nome:</label>
-        <p style="color: red; font-size:13px; margin-top:-18px;">{{ message }}</p>
-      </div>
-        <br>
-      <div class="user-box">
-        <input autocomplete="off" type="password" name="password" id="password">
-        <label>Senha:</label>
-        <p style="color: red; font-size:13px; margin-top:-18px;" v-for="error in errors" >{{ error }}</p>
-
-       <br>
-       <br>
-      </div>
-
-
-      <div id="alinhar">
-        <button type="submit">Login</button>
-        <a href="/esqueci/senha">Esqueci Minha Senha</a>
-      </div>
-
-    </form>
-
-
-
-  </div>
-  <br>
-
-  <a id="cadastre-se" style="text-decoration: none;" href="/cadastro/login">Cadastrar-se</a>
+<div id="geral">
+  <div class="login-box">
+      <h2>Entre</h2>
+  
+      <form @submit.prevent="form.post('/login/if')">
+  
+        <div class="user-box">
+          <input   type="text" name="email" id="email" autocomplete="off"  v-model="form.email">
+          <label>Nome:</label>
+          <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.email" >{{ errors.email }}</p>
+        </div>
+          <br>
+        <div class="user-box">
+          <input autocomplete="off" v-model="form.password" type="password" name="password" id="password">
+          <label>Senha:</label>
+          <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.password" >{{ errors.password }}</p>
+  
+         <br>
+         <br>
+        </div>
+  
+        <div id="alinhar">
+          <button type="submit">Login</button>
+          <Link href="/esqueci/senha">Esqueci Minha Senha</Link>
+        </div>
+  
+      </form>
+  
+  
+  
+    </div>
+    <br>
+  
+    <Link id="cadastre-se" style="text-decoration: none;" href="/cadastro/login">Cadastrar-se</Link>
+</div>
 
 </template>
 
@@ -44,24 +44,25 @@
 
 
 
-<script>
+<script setup >
 import { defineProps } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+
 const props = defineProps({
     errors: Array,
 });
 
 const form = useForm({
-
-    email: '',
-    password: '',
+  email: '',
+  password: '',
 
 });
 
 </script>
 
 
-<style>
+<style scoped >
+
 @import "..\Components\css\usuario-filial.css";
 
     #cadastre-se {

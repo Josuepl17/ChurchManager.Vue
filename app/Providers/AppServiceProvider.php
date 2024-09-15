@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
                 return [
                     'sucesso' => Session::get('sucesso'),
                     'falha' => Session::get('falha'),
+                    'codigo' => Session::get('codigo')
                 ];
             },
         ]);

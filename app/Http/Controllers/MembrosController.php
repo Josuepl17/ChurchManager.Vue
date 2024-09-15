@@ -26,7 +26,6 @@ class MembrosController extends Controller
 
     public function Atualizar(Request $request)
     {
-
         User::where('id', Auth::id())->update(['empresa_id' => $request->id]);
         return redirect('/');
     }

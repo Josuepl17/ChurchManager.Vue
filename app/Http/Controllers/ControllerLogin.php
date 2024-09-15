@@ -44,13 +44,11 @@ class ControllerLogin extends Controller
 
     public function formulario_usuario_empresa()
     {
-        return view('usuario-filial/login.cadastro-user-filial');
+        return Inertia::render('Cadastro-Filial-Users');
     }
 
     public function cadastro_usuario_empresa(FormFilialUsers $request)
     {
-        $dados = $request->all();
-
         if (MeuServico::verificar_login($request)) {
             return back()->withInput()->withErrors(['email' => 'Esse Email Já Está Cadastrado']);
         }
@@ -78,6 +76,7 @@ class ControllerLogin extends Controller
         $user_empresas->save();
         return redirect('/login');
     }
+
 
     public function autenticar_usuario(FormFilialUsers $request)
     {
@@ -213,7 +212,7 @@ class ControllerLogin extends Controller
         $user_id = Auth::user()->id;
         $relacionamentos = user_empresas::where('user_id', $user_id)->pluck('empresa_id');
         $empresas = empresas::whereIn('id', $relacionamentos)->get();
-        return view('usuario-filial/filial.selecionar-filial', compact('empresas'));
+        return Inertia::render('Selecionar-Filial', compact('empresas'));
     }
 
 
@@ -266,11 +265,12 @@ class ControllerLogin extends Controller
 
     public function esqueci_senha(){
 
-        return view('usuario-filial/atualiza-usuario.envia-codigo');
+        return Inertia::render('Recupere-Senha');
     }
 
     public function gera_codigo(FormFilialUsers $request)
     {
+       
         //$usuario = User::where('email', $request->email)->first();
         
 
@@ -279,7 +279,7 @@ class ControllerLogin extends Controller
             $codigo = rand(100000, 999999);
             Session()->put('codigo', $codigo);
             Session()->put('user_id', $user_id );
-            Mail::send(new EnvioEmail($codigo, $request->email));
+            Mail::send(new MailEnvioEmail($codigo, $request->email));
             return redirect('/recebe/codigo');
         } else {
             return back()->withInput()->withErrors(['email' => 'Esse email Não Está Cadastrado']);
@@ -287,11 +287,14 @@ class ControllerLogin extends Controller
     }
 
     public function recebe_codigo(){
-        return view('usuario-filial/atualiza-usuario.confirma-codigo');
+
+        return Inertia::render('Recebe-Codigo');
     }
 
     public function confirma_codigo(FormFilialUsers $request)
     {
+    
+
         if ($request->codigo == Session()->get('codigo')) {
             session()->forget('codigo');
             return redirect('/form/atualiza/usuario');
@@ -301,9 +304,9 @@ class ControllerLogin extends Controller
     }
 
     public function form_atualiza_usuario(){
+
         $user = User::find(Session()->get('user_id'))->first();
-        
-        return view('usuario-filial/atualiza-usuario.atualizar_usuario', compact('user'));
+        return Inertia::render('Atualizar-Usuarios', compact('user'));
     }
 
 
@@ -318,6 +321,7 @@ class ControllerLogin extends Controller
         }
 
         Session()->flush();
+        
             $user->nome = $request->user;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
