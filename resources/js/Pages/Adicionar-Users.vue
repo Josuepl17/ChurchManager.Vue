@@ -36,7 +36,7 @@
                   v-model="form.empresas"
                 >
               
-                <label> {{empresa.razao}} </label>
+                <label> {{ empresa.razao }} </label>
          
     </div>
 

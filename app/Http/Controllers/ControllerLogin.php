@@ -155,7 +155,7 @@ class ControllerLogin extends Controller
         $empresas = empresas::whereIn('id', $dados)->get();
         $user_editar = User::find($request->user_id);
         $empresasSelecionadas = user_empresas::where('user_id', $user_editar->id)->pluck('empresa_id')->toArray();
-        return view('usuario-filial/usuario.editar_user', compact('empresas', 'user_editar', 'empresasSelecionadas'));
+        return Inertia::render('Editar-User', compact('empresas', 'user_editar', 'empresasSelecionadas'));
     }
 
     public function editar_usuario(FormFilialUsers $request)
