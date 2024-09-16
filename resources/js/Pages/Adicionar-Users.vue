@@ -22,14 +22,22 @@
         <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.password" >{{ errors.password }}</p>
       </div>
 
+      <label style="color:white" >Empresas</label>
 
-      <div >
-      <input v-for="empresa in empresas" :key="empresa.id"
-        type="checkbox" 
-        :value="empresa.id" 
-        v-model="selectedEmpresas"
-      >
-      <label>Empresas</label>
+      <div v-for="empresa in empresas" :key="empresa.id" >
+        
+        <br>
+        <br>
+        
+        <input
+                  type="checkbox"
+                  :id="'presenca' + empresa.id"
+                  :value="empresa.id"
+                  v-model="form.empresas"
+                >
+              
+                <label> {{empresa.razao}} </label>
+         
     </div>
 
       <br>
@@ -48,10 +56,11 @@
 
 
 <script setup>
-
+import { ref } from 'vue';
 import { defineProps } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 
+//const selectedEmpresas = ref([]);
 
 const props = defineProps({
     errors: Array,
@@ -59,13 +68,13 @@ const props = defineProps({
 
 })
 
-const selectedEmpresas = ref([]);
+const selectedMembers = ref([]);
 
 const form = useForm({
     user: '',
     email: '', 
     password: '',
-    empresas: selectedEmpresas,
+    empresas: selectedMembers.value,
 })
 
 </script>

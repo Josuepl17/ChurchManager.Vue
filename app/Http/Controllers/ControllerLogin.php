@@ -120,6 +120,7 @@ class ControllerLogin extends Controller
 
     public function adicionar_usuario(FormFilialUsers $request)
     {
+        
         if (MeuServico::verificar_login($request)) {
 
             return back()->withInput()->withErrors(['email' => 'Esse Email Já Está Cadastrado']);
