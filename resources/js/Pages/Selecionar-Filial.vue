@@ -36,6 +36,8 @@
 
 
 <script setup >
+import { useForm } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
 
 const props = defineProps({
     empresas: Object,

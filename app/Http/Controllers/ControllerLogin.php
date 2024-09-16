@@ -107,7 +107,7 @@ class ControllerLogin extends Controller
             ->get(); // busquei
 
         //$razao_empresa = empresas::where('id', auth()->user()->empresa_id)->value('razao');
-        return view('usuario-filial/usuario.tela-user', compact('users'));
+        return Inertia::render('Tela-Users', compact('users'));
     }
 
     public function formulario_adicionar_usuario()
@@ -115,7 +115,7 @@ class ControllerLogin extends Controller
         $user_id = Auth::user()->id;
         $dados = user_empresas::where('user_id', $user_id)->pluck('empresa_id');
         $empresas = empresas::whereIn('id', $dados)->get();
-        return view('usuario-filial/usuario.adicionar_user', compact('empresas'));
+        return Inertia::render('Adicionar-Users', compact('empresas'));
     }
 
     public function adicionar_usuario(FormFilialUsers $request)
