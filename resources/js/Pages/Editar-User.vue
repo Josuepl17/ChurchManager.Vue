@@ -3,38 +3,35 @@
 <div id="geral" >
     <div class="login-box">
   <h2>Edição de Usuario</h2>
-  <form action="/editar/user" method="post" >
+  <form  @submit.prevent="form.post('/editar/user')">
 
     <div class="user-box">
-      <input type="text" name="nome" required="" >
+      <input type="text" name="nome" required="" v-model="form.nome" >
       <label>Nome:</label>
     </div>
     <div class="user-box">
-      <input type="text" name="email" required="" >
+      <input type="text" name="email" required="" v-model="form.email" >
       <label>Email:</label>
    
         <p style="color: red; font-size:13px; margin-top:-18px;">{{ message }}</p>
 
     </div>
-    <div class="user-box">
-      <input type="hidden" name="user_id" id="user_id" >
-    </div>
+
 
     <div v-for="empresa in empresas" :key="empresa.id">
-        <input
-                  type="checkbox"
-                  :id="'presenca' + empresa.id"
-                  :value="empresa.id"
-                  v-model="form.empresas"
-                >   
-                <label> {{ empresa.razao }} </label>
+      <input
+        type="checkbox"
+        :id="'presenca-' + empresa.id"
+        :value="empresa.id"
+        v-model="form.empresas">
 
+      <label :for="'presenca-' + empresa.id">{{ empresa.razao }}</label>
+    </div>
 
-        </div>
 <br>
 <div id="alinhar">
         <button type="submit">Atualizar</button>
-        <a href="/user/profile">Voltar</a>
+        <Link href="/user/profile">Voltar</Link>
       </div>
 
 
@@ -55,16 +52,18 @@ import { useForm } from '@inertiajs/vue3';
 const props = defineProps({
     errors: Array,
     empresas: Object,
-
+    user_editar: Object,
+    empresasSelecionadas: Array,
+    user_id: Number,
 })
 
-const selectedMembers = ref([]);
+//const selectedMembers = ref([]);
 
 const form = useForm({
-    user: '',
-    email: '', 
-    password: '',
-    empresas: selectedMembers.value,
+    nome: props.user_editar.nome,
+    email: props.user_editar.email, 
+    empresas: props.empresasSelecionadas || [],
+    user_id: props.user_id,
 })
 
 </script>

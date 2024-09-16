@@ -155,11 +155,12 @@ class ControllerLogin extends Controller
         $empresas = empresas::whereIn('id', $dados)->get();
         $user_editar = User::find($request->user_id);
         $empresasSelecionadas = user_empresas::where('user_id', $user_editar->id)->pluck('empresa_id')->toArray();
-        return Inertia::render('Editar-User', compact('empresas', 'user_editar', 'empresasSelecionadas'));
+        return Inertia::render('Editar-User', compact('empresas', 'user_editar', 'empresasSelecionadas', 'user_id'));
     }
 
     public function editar_usuario(FormFilialUsers $request)
     {
+       // todo errasdo concertear 
         $user = User::find($request->user_id);
     
         // Verifica se o email atual é diferente do novo email
@@ -170,6 +171,7 @@ class ControllerLogin extends Controller
             if (MeuServico::verificar_login($request)) {
                 // Se o novo email já está cadastrado, retorna um erro
                 return back()->withInput()->withErrors(['email' => 'Esse Novo Email Já Está Cadastrado']);
+
             } else {
                 // Se o novo email não está cadastrado, atualiza o usuário
                 user_empresas::where('user_id', $request->user_id)->delete(); // nunca pode ser do adm

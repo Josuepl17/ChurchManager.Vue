@@ -61,7 +61,6 @@ Presença
 
 
 <script setup>
-import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { defineProps } from 'vue';
 
@@ -69,12 +68,12 @@ const props = defineProps({
   membros: Array, // Corrigido para Array
 });
 
-const selectedMembers = ref([]);
+
 
 const form = useForm({
   datereg: '',
   evento: '',
-  presenca: selectedMembers.value
+  presenca: [],
 });
 
 
