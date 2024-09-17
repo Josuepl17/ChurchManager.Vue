@@ -88,7 +88,7 @@ Route::post('/editar/user', [ControllerLogin::class, 'editar_usuario']);
 //--------------------------------FILIAL--------------------------------------------//
 Route::get('/selecionar/filial', [ControllerLogin::class, 'selecionar_filial']);
 Route::get('/cadastrar/empresas', [ControllerLogin::class, 'formulario_adicionar_empresa']);
-Route::get('/cadastro/empresa/novo', [ControllerLogin::class, 'adicionar_empresa']);
+Route::post('/cadastro/empresa/novo', [ControllerLogin::class, 'adicionar_empresa']);
 
 Route::get('/logout', [ControllerLogin::class, 'logout']);
 

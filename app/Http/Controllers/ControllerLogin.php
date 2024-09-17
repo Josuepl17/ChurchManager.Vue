@@ -160,37 +160,50 @@ class ControllerLogin extends Controller
 
     public function editar_usuario(FormFilialUsers $request)
     {
-       // todo errasdo concertear 
+        $empresasMarcadas = $request->empresas;
+        
+
         $user = User::find($request->user_id);
-        //dd($user->email);
-        // Verifica se o email atual é diferente do novo email
+
         if ($user->email != $request->email) {
-            // Verifica se o novo email já está cadastrado no banco
+
             
     
-            if (MeuServico::verificar_login($request)) {
-                // Se o novo email já está cadastrado, retorna um erro
-                return back()->withInput()->withErrors(['email' => 'Esse Novo Email Já Está Cadastrado']);
+                    if (MeuServico::verificar_login($request)) {
+                        return back()->withInput()->withErrors(['email' => 'Esse Novo Email Já Está Cadastrado']);
 
-            } else {
-                // Se o novo email não está cadastrado, atualiza o usuário
-                user_empresas::where('user_id', $request->user_id)->delete(); // nunca pode ser do adm
-    
-                $user->nome = $request->nome;
-                $user->email = $request->email;
-                $user->save();
-    
-                if ($empresasMarcadas = $request->empresas) {
-                    foreach ($empresasMarcadas as $emp) {
-                        $user_empresas = new user_empresas();
-                        $user_empresas->user_id = $user->id;
-                        $user_empresas->empresa_id = $emp;
-                        $user_empresas->save();
+                    } else {
+                        if( count($empresasMarcadas) == 0){
+                            dd("deve ter pelo menos 1");
+                             
+                         } else{
+                             user_empresas::where('user_id', $request->user_id)->delete();
+             
+                         }
+            
+                        $user->nome = $request->nome;
+                        $user->email = $request->email;
+                        $user->save();
+            
+                        if ($empresasMarcadas = $request->empresas) {
+                            foreach ($empresasMarcadas as $emp) {
+                                $user_empresas = new user_empresas();
+                                $user_empresas->user_id = $user->id;
+                                $user_empresas->empresa_id = $emp;
+                                $user_empresas->save();
+                            }
+                        }
                     }
-                }
-            }
         } else {
             // Se o email é igual, apenas atualiza os outros dados
+            if( count($empresasMarcadas) == 0){
+               dd("deve ter pelo menos 1");
+                
+            } else{
+                user_empresas::where('user_id', $request->user_id)->delete();
+
+            }
+           
             $user->nome = $request->nome;
             $user->save();
     
@@ -230,12 +243,12 @@ class ControllerLogin extends Controller
 
         
 
-        return view('usuario-filial/filial.cadastro-filial', compact('users'));
+        return Inertia::render('Adicionar-Filial', compact('users'));
     }
 
     public function adicionar_empresa(FormFilialUsers $request)
     {
-
+        //dd($request->all());
         if (MeuServico::verificar_empresa($request)) {
             return back()->withInput()->withErrors(['cnpj' => 'Esse CNPJ Já Está Cadastrado']);
         }

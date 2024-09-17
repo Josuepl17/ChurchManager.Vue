@@ -23,10 +23,10 @@
 <div id="alinhar" >
 
   
-  <a id="botao-link" style="text-decoration: none;" href="/cadastrar/empresas">Cadastro Nova Filial</a>
+  <Link id="botao-link" style="text-decoration: none;" href="/cadastrar/empresas">Cadastro Nova Filial</Link>
   <br>
 
-  <a id="botao-link" style="text-decoration: none;" href="/">Menu Principal</a>
+  <Link id="botao-link" style="text-decoration: none;" href="/">Menu Principal</Link>
 </div>
 
 

@@ -2,7 +2,7 @@
     <div id="geral" >
         <div class="login-box">
     <h2>Adicionando Usuario</h2>
-    <form @submit.prevent="form.post('/cadastro/user/adicionar')" >
+    <form @submit.prevent="form.get('/cadastro/empresa/novo')" >
 
       <div class="user-box">
         <input type="text" name="user" required="" v-model="form.user" >
@@ -60,7 +60,7 @@ import { ref } from 'vue';
 import { defineProps } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 
-//const selectedEmpresas = ref([]);
+
 
 const props = defineProps({
     errors: Array,
@@ -68,13 +68,13 @@ const props = defineProps({
 
 })
 
-const selectedMembers = ref([]);
+
 
 const form = useForm({
     user: '',
     email: '', 
     password: '',
-    empresas: selectedMembers.value,
+    empresas: [],
 })
 
 </script>
