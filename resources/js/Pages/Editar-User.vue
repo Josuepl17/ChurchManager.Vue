@@ -16,7 +16,7 @@
         <p style="color: red; font-size:13px; margin-top:-18px;">{{ message }}</p>
 
     </div>
-
+<br>
 
     <div v-for="empresa in empresas" :key="empresa.id">
       <input
@@ -54,7 +54,7 @@ const props = defineProps({
     empresas: Object,
     user_editar: Object,
     empresasSelecionadas: Array,
-    user_id: Number,
+    
 })
 
 //const selectedMembers = ref([]);
@@ -63,7 +63,7 @@ const form = useForm({
     nome: props.user_editar.nome,
     email: props.user_editar.email, 
     empresas: props.empresasSelecionadas || [],
-    user_id: props.user_id,
+    user_id: props.user_editar.id,
 })
 
 </script>

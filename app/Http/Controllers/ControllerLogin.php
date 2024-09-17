@@ -155,14 +155,14 @@ class ControllerLogin extends Controller
         $empresas = empresas::whereIn('id', $dados)->get();
         $user_editar = User::find($request->user_id);
         $empresasSelecionadas = user_empresas::where('user_id', $user_editar->id)->pluck('empresa_id')->toArray();
-        return Inertia::render('Editar-User', compact('empresas', 'user_editar', 'empresasSelecionadas', 'user_id'));
+        return Inertia::render('Editar-User', compact('empresas', 'user_editar', 'empresasSelecionadas'));
     }
 
     public function editar_usuario(FormFilialUsers $request)
     {
        // todo errasdo concertear 
         $user = User::find($request->user_id);
-    
+        //dd($user->email);
         // Verifica se o email atual é diferente do novo email
         if ($user->email != $request->email) {
             // Verifica se o novo email já está cadastrado no banco
