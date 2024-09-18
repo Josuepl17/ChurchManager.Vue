@@ -29,7 +29,7 @@
       <option value="OBREIRO"></option>
     </datalist>
     <input v-model="form.endereco" type="text" name="endereco" id="endereco" autocomplete="off" required maxlength="30" placeholder="Endereço:">
-    <input v-model="form.telefone" type="number" name="telefone" id="telefone" autocomplete="off" required maxlength="11" placeholder="Telefone:">
+    <input v-model="form.telefone" @input="formatPhone" type="text" name="telefone" id="telefone" autocomplete="off" required  placeholder="Telefone:">
     <button type="submit">Cadastrar</button>
   </form>
 </div>   
@@ -58,6 +58,27 @@ const form = useForm({
     endereco: null,
     telefone: null,
 })
+
+function formatPhone(event) {
+  let phone = event.target.value.replace(/\D/g, ''); // Remove qualquer coisa que não seja dígito
+
+  // Limita o telefone a no máximo 11 dígitos (2 do DDD + 8 ou 9 do número)
+  if (phone.length > 11) {
+    phone = phone.slice(0, 11);
+  }
+
+  // Adiciona o formato (XX) XXXX-XXXX ou (XX) XXXXX-XXXX
+  phone = phone.replace(/^(\d{2})(\d)/, '($1) $2');
+  if (phone.length <= 13) {
+    // Formato para 8 dígitos: (XX) XXXX-XXXX
+    phone = phone.replace(/(\d{4})(\d)/, '$1-$2');
+  } else {
+    // Formato para 9 dígitos: (XX) XXXXX-XXXX
+    phone = phone.replace(/(\d{5})(\d)/, '$1-$2');
+  }
+
+  form.telefone = phone;
+}
 
 </script>
 

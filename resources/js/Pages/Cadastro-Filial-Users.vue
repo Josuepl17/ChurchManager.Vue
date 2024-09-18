@@ -29,7 +29,7 @@
           </div>
     
           <div class="user-box">
-            <input v-model="form.cnpj" type="text" name="cnpj" required="" >
+            <input v-model="form.cnpj" @input="formatCNPJ" type="text" name="cnpj" required="" >
             <label>CNPJ:</label>
             <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.cnpj" >{{ errors.cnpj }}</p>
           </div>
@@ -67,6 +67,22 @@ const form = useForm({
     cnpj: '',
 
 })
+
+function formatCNPJ() {
+  let cnpj = form.cnpj.replace(/\D/g, ''); // Remove qualquer coisa que não seja dígito
+
+  // Limita o CNPJ a no máximo 14 dígitos
+  if (cnpj.length > 14) {
+    cnpj = cnpj.slice(0, 14); 
+  }
+
+  cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
+  cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+  cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
+  cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
+
+  form.cnpj = cnpj;
+}
 
 </script>
 
