@@ -94,7 +94,7 @@ const props = defineProps({
 // Inicialize o formulário com os dados recebidos como props
 const form = useForm({
 descricao: '',
-  datereg: '',
+  datereg: '' || props.dados.datanow,
   valor: '',
   dataini: '' || props.dataini,
   datafi: '' || props.datafi,

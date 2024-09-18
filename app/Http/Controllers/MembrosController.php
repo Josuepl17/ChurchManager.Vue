@@ -71,7 +71,12 @@ class MembrosController extends Controller
         $empresa_id = Auth::user();
         $razao_empresa = $empresa_id->empresas->first();
         $razao_empresa = $razao_empresa->razao;
-        $eventos = Eventos::where('empresa_id', Auth::user()->empresa_id)->get();
+        $eventos = Eventos::where('empresa_id', Auth::user()->empresa_id)->get()
+        ->map(function ($eventos) {
+        // Formatar a data 'data_evento' para 'd/m/Y'
+        $eventos->datereg = Carbon::parse($eventos->datereg)->format('d/m/Y');
+        return $eventos;
+    });
         return Inertia::render('Eventos', compact('eventos'));
     }
 

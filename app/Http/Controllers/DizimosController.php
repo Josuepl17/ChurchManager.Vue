@@ -61,7 +61,7 @@ class DizimosController extends Controller
                                }),
         
             'totaldizimos' => $query->clone()->get()->sum('valor'), // Usando clone para evitar modificar a consulta original
-            'datanow' => Carbon::now()->format('d-m-Y'),
+            'datanow' => Carbon::now()->format('Y-m-d'),
             'razao_empresa' => empresas::where('id', $empresa_id)->value('razao')
         ];
         

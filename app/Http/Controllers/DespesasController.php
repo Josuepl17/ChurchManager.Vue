@@ -46,10 +46,15 @@ class DespesasController extends Controller
         // Executando as consultas e formatando os dados
         $dados = [
             'descricao' => $queryDescricao->get(),
-            'despesas' => $queryDespesas->get(),
+            'despesas' => $queryDespesas->get()
+                ->map(function ($despesa) {
+                    // Formatar a data 'datereg' para 'd/m/Y'
+                    $despesa->datereg = \Carbon\Carbon::parse($despesa->datereg)->format('d/m/Y');
+                    return $despesa;
+                }),
             'totaldespesas' => $queryDespesas->clone()->sum('valor'), // Usando clone para evitar modificar a consulta original
-            'datanow' => Carbon::now()->format('Y-m-d'),
-            'razao_empresa' => empresas::where('id', $empresa_id)->value('razao')
+            'datanow' => \Carbon\Carbon::now()->format(('Y-m-d')), // Formatando a data atual como 'd/m/Y'
+            'razao_empresa' => \App\Models\Empresas::where('id', $empresa_id)->value('razao')
         ];
 
 

@@ -41,10 +41,15 @@ class OfertasController extends Controller
 
         // Executando as consultas e formatando os dados
         $dados = [
-            'ofertas' => $queryOfertas->get(),
+            'ofertas' => $queryOfertas->get()
+                ->map(function ($oferta) {
+                    // Formatar a data 'datereg' para 'd/m/Y'
+                    $oferta->datereg = \Carbon\Carbon::parse($oferta->datereg)->format('d/m/Y');
+                    return $oferta;
+                }),
             'totalofertas' => $queryOfertas->clone()->sum('valor'), // Usando clone para evitar modificar a consulta original
-            'datanow' => Carbon::now()->format('Y-m-d'),
-            'razao_empresa' => empresas::where('id', $empresa_id)->value('razao')
+            'datanow' => \Carbon\Carbon::now()->format('Y-m-d'), // Formatando a data atual como 'd/m/Y'
+            'razao_empresa' => \App\Models\Empresas::where('id', $empresa_id)->value('razao')
         ];
 
         return Inertia::render('Ofertas', compact('dados', 'dataini', 'datafi'));

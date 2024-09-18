@@ -88,12 +88,19 @@ const props = defineProps({
 const form = useForm({
   membro_id: props.membro_id || '',
   nome: props.nome || '',
-  datereg: '',
+  datereg: props.dados.datanow || '',
   valor: '',
   dataini: '' || props.dataini,
   datafi: '' || props.datafi,
 });
+
+
+
+
+
 </script>
+
+
 
 
   <style lang="">
