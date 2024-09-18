@@ -41,12 +41,14 @@
       <td class="remover">{{ membro.endereco }}</td>
       <td>{{ membro.funcao }}</td>
       <td>{{ membro.telefone }}</td>
-      <td></td>
+      <td>
+        {{ (qtdEventos > 0 ? Math.round((membro.presenca / qtdEventos) * 100) : 0) }}%
+      </td>
       <td id="inserir-verde">
         <form @submit.prevent="form.post('/inserir/dizimos')">
           <input type="hidden" name="membro_id" :value="form.membro_id">
           <input type="hidden" name="nome" :value="form.nome">
-          <button type="submit" @click="handleClick(membro)">Inserir</button>
+          <button style="color:white" type="submit" @click="handleClick(membro)">Inserir</button>
         </form>
       </td>
       <td id="X">
@@ -90,6 +92,8 @@ export default {
       form.membro_id = membro.id;
       form.nome = membro.nome;
     }
+
+
 
     // Retorna form e handleClick para uso no template
     return {
