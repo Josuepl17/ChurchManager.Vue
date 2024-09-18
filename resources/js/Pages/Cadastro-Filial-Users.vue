@@ -29,7 +29,7 @@
           </div>
     
           <div class="user-box">
-            <input v-model="form.cnpj" type="text" name="cnpj" required="" oninput="formatCNPJ(this)" >
+            <input v-model="form.cnpj" type="text" name="cnpj" required="" >
             <label>CNPJ:</label>
             <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.cnpj" >{{ errors.cnpj }}</p>
           </div>
@@ -69,6 +69,9 @@ const form = useForm({
 })
 
 </script>
+
+
+
 
 <style scoped >
     @import "..\Components\css\usuario-filial.css";

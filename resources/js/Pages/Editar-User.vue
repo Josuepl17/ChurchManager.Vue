@@ -13,7 +13,7 @@
       <input type="text" name="email" required="" v-model="form.email" >
       <label>Email:</label>
    
-        <p style="color: red; font-size:13px; margin-top:-18px;">{{ message }}</p>
+      <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.email" >{{ errors.email }}</p>
 
     </div>
 <br>

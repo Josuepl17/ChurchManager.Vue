@@ -43,7 +43,7 @@
   
           <div id="alinhar">
             <button type="submit">Adicionar</button>
-            <a href="/selecionar/filial">Voltar</a>
+            <Link href="/selecionar/filial">Voltar</Link>
           </div>
   
         </form>
@@ -66,10 +66,6 @@ import { useForm } from '@inertiajs/vue3';
     users: Object,
 
 })
-  
-
-
-  
   </script>
   
   <style scoped>

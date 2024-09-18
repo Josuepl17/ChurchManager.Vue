@@ -7,13 +7,13 @@
       <form @submit.prevent="form.post('/login/if')">
   
         <div class="user-box">
-          <input   type="text" name="email" id="email" autocomplete="off"  v-model="form.email">
+          <input   type="text" name="email" id="email" autocomplete="off"  v-model="form.email" required >
           <label>Nome:</label>
           <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.email" >{{ errors.email }}</p>
         </div>
           <br>
         <div class="user-box">
-          <input autocomplete="off" v-model="form.password" type="password" name="password" id="password">
+          <input autocomplete="off" v-model="form.password" type="password" name="password" id="password" required >
           <label>Senha:</label>
           <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.password" >{{ errors.password }}</p>
   
