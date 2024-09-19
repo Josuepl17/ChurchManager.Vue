@@ -15,7 +15,7 @@
           </div>
   
           <div class="user-box">
-            <input
+            <input @input="formatCNPJ"
               type="text"
               name="cnpj"
               required
@@ -49,6 +49,10 @@
         </form>
       </div>
     </div>
+
+
+
+
   </template>
   
   <script setup>
@@ -66,9 +70,27 @@ import { useForm } from '@inertiajs/vue3';
     users: Object,
 
 })
+
+function formatCNPJ() {
+  let cnpj = form.cnpj.replace(/\D/g, ''); // Remove qualquer coisa que não seja dígito
+
+  // Limita o CNPJ a no máximo 14 dígitos
+  if (cnpj.length > 14) {
+    cnpj = cnpj.slice(0, 14); 
+  }
+
+  cnpj = cnpj.replace(/^(\d{2})(\d)/, '$1.$2');
+  cnpj = cnpj.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+  cnpj = cnpj.replace(/\.(\d{3})(\d)/, '.$1/$2');
+  cnpj = cnpj.replace(/(\d{4})(\d)/, '$1-$2');
+
+  form.cnpj = cnpj;
+}
   </script>
   
   <style scoped>
   @import "../Components/css/usuario-filial.css";
+
+
   </style>
   

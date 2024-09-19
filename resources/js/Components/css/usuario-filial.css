@@ -3,6 +3,8 @@ html {
   height: 100%;
 }
 
+
+
 #geral{
   background: linear-gradient(#141e30, #243b55);
   height: 100vh;
@@ -43,10 +45,12 @@ template{
   padding: 0;
   color: #fff;
   text-align: center;
+  
 }
 
 .login-box .user-box {
   position: relative;
+  
 }
 
 .login-box .user-box input {

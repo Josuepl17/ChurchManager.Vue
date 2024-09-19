@@ -68,6 +68,12 @@ Ofertas
 <!----------------------------------------------------------------------------------->    
 </layout>
 
+
+<div v-if="flash.falha" :key="animationKey" class="notification">
+        Esta é uma notificação!
+    </div>
+
+
 </template>
 
 
@@ -98,6 +104,37 @@ const form = useForm({
 
 
 
-<style lang="">
-        
+<style scoped>
+
+         .notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            opacity: 0;
+            animation: slideDown 4s ease-in-out forwards;
+        }
+
+        @keyframes slideDown {
+            0% {
+                top: -100px;
+                opacity: 0;
+            }
+            10% {
+                top: 50px;
+                opacity: 1;
+            }
+            90% {
+                top: 50px;
+                opacity: 1;
+            }
+            100% {
+                top: -100px;
+                opacity: 0;
+            }
+        } 
 </style>

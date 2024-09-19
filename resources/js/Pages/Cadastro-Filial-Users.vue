@@ -12,14 +12,16 @@
           <div class="user-box">
             <input v-model="form.email" type="text" name="email" id="email" required="" >
             <label>Email:</label>
-            <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.email" >{{ errors.email }}</p>
+            <div id="validation">
+              <p style="color: red; font-size:13px; margin-top:-18px; padding-bottom:20px;" v-if="errors.email" >{{ errors.email }}</p>
+            </div>
           </div>
     
     
           <div class="user-box">
             <input v-model="form.password" type="password" name="password" required="">
             <label>Senha:</label>
-            <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.password" >{{ errors.password }}</p>
+              <p style="color: red; font-size:13px; margin-top:-18px; padding-bottom:20px;" v-if="errors.password" >{{ errors.password }}</p>
           </div>
     
     
@@ -31,13 +33,15 @@
           <div class="user-box">
             <input v-model="form.cnpj" @input="formatCNPJ" type="text" name="cnpj" required="" >
             <label>CNPJ:</label>
-            <p style="color: red; font-size:13px; margin-top:-18px;" v-if="errors.cnpj" >{{ errors.cnpj }}</p>
+
+              <p style="color: red; font-size:13px; margin-top:-18px; padding-bottom:20px;" v-if="errors.cnpj" >{{ errors.cnpj }}</p>
+
           </div>
     
     
           <div id="alinhar-esquerda">
-            <button type="submit">Cadastrar</button>
-    
+            <button type="submit">Cadastrar</button> <span style="padding:10px"></span>
+            <Link id="botao-link" href="/login">Voltar</Link>
           </div>
         </form>
     
