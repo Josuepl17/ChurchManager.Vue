@@ -234,42 +234,6 @@ i img{
    
 }
 
-#preloader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    color: #000;
-    z-index: 9999;
-}
-
-.spinner {
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-
-
 
 /*............... mudanças Telefone................*/
 
@@ -513,25 +477,36 @@ table tr:first-child { /*Fixar no Topo a Primeira Linha da Tabela */
     padding: 10px;
 }
 
-/* Div Conteudo da Flash Mensage */
-.flash-message{
+.notification {
+    position: fixed;
+    top: -500px;
+    left: 50%;
+    transform: translateX(-50%);
+    
     color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-   width: 100%;
-   height: 4%;
-   animation: fadeOut 3s forwards;
-   
-   
+    padding: 20px;
+    border-radius: 5px;
+    opacity: 0;
+    animation: slideDown 4s ease-in-out forwards;
 }
 
-@keyframes fadeOut {
-    0% { opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
-  }
+@keyframes slideDown {
+    0% {
+        top: -100px;
+        opacity: 0;
+    }
+    10% {
+        top: 25px;
+        opacity: 1;
+    }
+    90% {
+        top: 25px;
+        opacity: 1;
+    }
+    100% {
+        top: -100px;
+        opacity: 0;
+    }
+} 
 
   

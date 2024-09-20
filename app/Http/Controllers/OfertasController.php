@@ -66,7 +66,7 @@ class OfertasController extends Controller
         return redirect('/oferta');
     }
 
-    public function registrar_oferta(request $request)
+    public function registrar_oferta(request $request) // get pelo flash mensage
     {
         if (MeuServico::Verificar($request->datereg)) { // verifica se as data esta entre as duas datas do caixa
             $dados = $request->all();
@@ -74,14 +74,11 @@ class OfertasController extends Controller
             $dados['empresa_id'] = Auth::user()->empresa_id; // acessa o dado da coluna do usuario conectado e inseri na variavel dados
             $dados['valor'] = str_replace(',', '.', $dados['valor']); // Troca virgula por Ponto e Inseri na Variavel Dados 
             ofertas::create($dados); // Cria o Registro da Nova Oferta
-            Session()->flash('sucesso', 'Item criado com Sucesso'); // Retorna a mensagem de Sucesso
-
+            Session()->flash('sucesso',  'Item Criado Com Sucesso');
         } else {
-            Session()->flash('falha',  'Falha ao criar item, Caixa Fechado'); // Retorna Falha
+            Session()->flash('falha',  'Falha ao apagar item, Caixa Fechado');
         }
 
-        Session()->flash('dataini', $request->dataini);
-        Session()->flash('datafi', $request->datafi);
 
         return redirect('/oferta');
     }

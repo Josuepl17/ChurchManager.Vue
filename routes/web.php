@@ -51,7 +51,7 @@ Route::get('/tela/dizimos', [DizimosController::class, 'filter_page']);
 
                              /*Ofertas*/
 Route::get('/oferta', [OfertasController::class, 'filter_page'])->middleware('auth')->name('oferta'); // Link menu Oferta
-Route::post('/registrar/oferta', [OfertasController::class, 'registrar_oferta'])->middleware('auth'); // Registra Uma oferta
+Route::get('/registrar/oferta', [OfertasController::class, 'registrar_oferta'])->middleware('auth'); // Registra Uma oferta
 Route::get('/destroy/ofertas/{id}', [OfertasController::class, 'botao_excluir_oferta'])->middleware('auth'); // Apaga uma Oferta 
 Route::get('/filtrar/ofertas', [OfertasController::class, 'filtro'])->middleware('auth'); // Filtra as Ofertad
 

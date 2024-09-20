@@ -48,20 +48,20 @@ Ofertas
 
 
 <div id="formulario-registro">
-    <form @submit.prevent="form.post('/registrar/oferta')" >
+    <form @submit.prevent="form.get('/registrar/oferta')" >
         <input type="date" name="data" id="data" v-model="form.datereg" autocomplete="off" required>
         <input type="number" step="0.01" name="valor" id="valor" v-model="form.valor" autocomplete="off" required placeholder="Valor">
         <button type="submit">Registar Oferta</button>
     </form>
 </div>
 
-<div v-if="flash.sucesso" class="flash-message" style="background-color: rgb(0, 77, 0);">
-        <p>{{ flash.sucesso }}</p>
+<div v-if="flash.sucesso" :key="animationKey" class="notification" style="background-color: #4CAF50;" >
+<p>{{ flash.sucesso }}</p>
 </div>
 
-<div v-if="flash.falha" class="flash-message" style="background-color: red;">
-    <p>{{ flash.falha }}</p>
-    </div>
+<div v-if="flash.falha" :key="animationKey" class="notification" style="background-color: red;" >
+<p>{{ flash.falha }}</p>
+</div>
      
 </template> <!--conteudo-->
 
@@ -69,9 +69,7 @@ Ofertas
 </layout>
 
 
-<div v-if="flash.falha" :key="animationKey" class="notification">
-        Esta é uma notificação!
-    </div>
+
 
 
 </template>
@@ -81,6 +79,7 @@ Ofertas
 
 import { useForm } from '@inertiajs/vue3';
 import { defineProps } from 'vue';
+
 
 const props = defineProps({
   dados: Object,
@@ -98,7 +97,6 @@ const form = useForm({
   datafi: '' || props.datafi,
 });
 
-
 </script>
 
 
@@ -106,35 +104,5 @@ const form = useForm({
 
 <style scoped>
 
-         .notification {
-            position: fixed;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            opacity: 0;
-            animation: slideDown 4s ease-in-out forwards;
-        }
 
-        @keyframes slideDown {
-            0% {
-                top: -100px;
-                opacity: 0;
-            }
-            10% {
-                top: 50px;
-                opacity: 1;
-            }
-            90% {
-                top: 50px;
-                opacity: 1;
-            }
-            100% {
-                top: -100px;
-                opacity: 0;
-            }
-        } 
 </style>
