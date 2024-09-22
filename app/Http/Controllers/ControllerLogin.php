@@ -83,14 +83,14 @@ class ControllerLogin extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']]) || Auth::attempt(['email' => strtoupper($credentials['email']), 'password' => $credentials['password']])) {
             return redirect('/selecionar/filial');
-        } else{
-            if(MeuServico::verificar_login($request)){
+        } else {
+            if (MeuServico::verificar_login($request)) {
                 return back()->withInput()->withErrors(['login' => 'Login Incorreto.']);
-            } else{
+            } else {
                 return back()->withInput()->withErrors(['login' => 'Usuario Não Existe..']);
             }
         }
-       
+
         return redirect('/login');
     }
 
@@ -120,26 +120,31 @@ class ControllerLogin extends Controller
 
     public function adicionar_usuario(FormFilialUsers $request)
     {
-        
+
+
         if (MeuServico::verificar_login($request)) {
 
             return back()->withInput()->withErrors(['email' => 'Esse Email Já Está Cadastrado']);
         }
-        $user = new User();
-        $user->nome = $request->user;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->empresa_id = Auth::user()->empresa_id;;
-        $user->save();
 
+        $empresasMarcadas = $request->input('empresas');
 
-        if ($empresasMarcadas = $request->input('empresas')) {
+        if (count($empresasMarcadas) >= 1) {
+            $user = new User();
+            $user->nome = $request->user;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->empresa_id = Auth::user()->empresa_id;;
+            $user->save();
+
             foreach ($empresasMarcadas as $emp) {
                 $user_empresas = new user_empresas();
                 $user_empresas->user_id = $user->id;
                 $user_empresas->empresa_id = $emp;
                 $user_empresas->save();
             }
+        } else {
+            return back()->withInput()->withErrors(['empresa' => 'É Necessario Selecionar Min. 1']);
         }
 
         return redirect('/user/profile');
@@ -161,52 +166,47 @@ class ControllerLogin extends Controller
     public function editar_usuario(FormFilialUsers $request)
     {
         $empresasMarcadas = $request->empresas;
-        
+
 
         $user = User::find($request->user_id);
 
         if ($user->email != $request->email) {
 
-            
-    
-                    if (MeuServico::verificar_login($request)) {
-                        return back()->withInput()->withErrors(['email' => 'Esse Novo Email Já Está Cadastrado']);
 
-                    } else {
-                        if( count($empresasMarcadas) == 0){
-                            dd("deve ter pelo menos 1");
-                             
-                         } else{
-                             user_empresas::where('user_id', $request->user_id)->delete();
-             
-                         }
-            
-                        $user->nome = $request->nome;
-                        $user->email = $request->email;
-                        $user->save();
-            
-                        if ($empresasMarcadas = $request->empresas) {
-                            foreach ($empresasMarcadas as $emp) {
-                                $user_empresas = new user_empresas();
-                                $user_empresas->user_id = $user->id;
-                                $user_empresas->empresa_id = $emp;
-                                $user_empresas->save();
-                            }
-                        }
+
+            if (MeuServico::verificar_login($request)) {
+                return back()->withInput()->withErrors(['email' => 'Esse Novo Email Já Está Cadastrado']);
+            } else {
+                if (count($empresasMarcadas) == 0) {
+                    dd("deve ter pelo menos 1");
+                } else {
+                    user_empresas::where('user_id', $request->user_id)->delete();
+                }
+
+                $user->nome = $request->nome;
+                $user->email = $request->email;
+                $user->save();
+
+                if ($empresasMarcadas = $request->empresas) {
+                    foreach ($empresasMarcadas as $emp) {
+                        $user_empresas = new user_empresas();
+                        $user_empresas->user_id = $user->id;
+                        $user_empresas->empresa_id = $emp;
+                        $user_empresas->save();
                     }
+                }
+            }
         } else {
             // Se o email é igual, apenas atualiza os outros dados
-            if( count($empresasMarcadas) == 0){
-               dd("deve ter pelo menos 1");
-                
-            } else{
+            if (count($empresasMarcadas) == 0) {
+                dd("deve ter pelo menos 1");
+            } else {
                 user_empresas::where('user_id', $request->user_id)->delete();
-
             }
-           
+
             $user->nome = $request->nome;
             $user->save();
-    
+
             if ($empresasMarcadas = $request->empresas) {
                 foreach ($empresasMarcadas as $emp) {
                     $user_empresas = new user_empresas();
@@ -216,7 +216,7 @@ class ControllerLogin extends Controller
                 }
             }
         }
-    
+
         return redirect('/user/profile');
     }
 
@@ -241,7 +241,7 @@ class ControllerLogin extends Controller
             ->where('id', '!=', Auth::user()->empresa_id)
             ->get(); // busquei
 
-        
+
 
         return Inertia::render('Adicionar-Filial', compact('users'));
     }
@@ -279,22 +279,23 @@ class ControllerLogin extends Controller
     //......................................................RECUPERA................................................//
 
 
-    public function esqueci_senha(){
+    public function esqueci_senha()
+    {
 
         return Inertia::render('Recupere-Senha');
     }
 
     public function gera_codigo(FormFilialUsers $request)
     {
-       
+
         //$usuario = User::where('email', $request->email)->first();
-        
+
 
         if (MeuServico::verificar_login($request)) {
             $user_id = User::where('email', $request->email)->first();
             $codigo = rand(100000, 999999);
             Session()->put('codigo', $codigo);
-            Session()->put('user_id', $user_id );
+            Session()->put('user_id', $user_id);
             Mail::send(new MailEnvioEmail($codigo, $request->email));
             return redirect('/recebe/codigo');
         } else {
@@ -302,14 +303,15 @@ class ControllerLogin extends Controller
         }
     }
 
-    public function recebe_codigo(){
+    public function recebe_codigo()
+    {
 
         return Inertia::render('Recebe-Codigo');
     }
 
     public function confirma_codigo(FormFilialUsers $request)
     {
-    
+
 
         if ($request->codigo == Session()->get('codigo')) {
             session()->forget('codigo');
@@ -319,7 +321,8 @@ class ControllerLogin extends Controller
         }
     }
 
-    public function form_atualiza_usuario(){
+    public function form_atualiza_usuario()
+    {
 
         $user = User::find(Session()->get('user_id'))->first();
         return Inertia::render('Atualizar-Usuarios', compact('user'));
@@ -330,20 +333,19 @@ class ControllerLogin extends Controller
     public function atualizar_usuario(FormFilialUsers $request)
     {
         $user = User::find(Session()->get('user_id'))->first();
-        if ($user->email != $request->email){
-            if ( User::where('email',  $request->email)->first()){
+        if ($user->email != $request->email) {
+            if (User::where('email',  $request->email)->first()) {
                 return back()->withInput()->withErrors(['email' => 'Novo email Já Cadastrado']);
-            }     
+            }
         }
 
         Session()->flush();
-        
-            $user->nome = $request->user;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->save();
-            return redirect('/login');
 
+        $user->nome = $request->user;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect('/login');
     }
 
     //......................................................LOGIN................................................//
@@ -353,8 +355,4 @@ class ControllerLogin extends Controller
         Auth::logout();
         return redirect('/login');
     }
-
-    
-
-    
 }

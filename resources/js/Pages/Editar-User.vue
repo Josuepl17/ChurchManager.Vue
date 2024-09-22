@@ -18,7 +18,7 @@
     </div>
 <br>
 
-    <div v-for="empresa in empresas" :key="empresa.id">
+    <div style="color: white" v-for="empresa in empresas" :key="empresa.id">
       <input
         type="checkbox"
         :id="'presenca-' + empresa.id"
@@ -50,25 +50,25 @@ import { useForm } from '@inertiajs/vue3';
 //const selectedEmpresas = ref([]);
 
 const props = defineProps({
-    errors: Array,
-    empresas: Object,
-    user_editar: Object,
-    empresasSelecionadas: Array,
-    
+  errors: Array,
+  empresas: Object,
+  user_editar: Object,
+  empresasSelecionadas: Array,
+
 })
 
 //const selectedMembers = ref([]);
 
 const form = useForm({
-    nome: props.user_editar.nome,
-    email: props.user_editar.email, 
-    empresas: props.empresasSelecionadas || [],
-    user_id: props.user_editar.id,
+  nome: props.user_editar.nome,
+  email: props.user_editar.email,
+  empresas: props.empresasSelecionadas || [],
+  user_id: props.user_editar.id,
 })
 
 </script>
 
 
 <style scoped>
-   @import "..\Components\css\usuario-filial.css"; 
+@import "..\Components\css\usuario-filial.css";
 </style>

@@ -2,7 +2,7 @@
     <div id="geral" >
         <div class="login-box">
     <h2>Adicionando Usuario</h2>
-    <form @submit.prevent="form.get('/cadastro/empresa/novo')" >
+    <form @submit.prevent="form.post('/cadastro/user/adicionar')" >
 
       <div class="user-box">
         <input type="text" name="user" required="" v-model="form.user" >
@@ -23,8 +23,10 @@
       </div>
 
       <label style="color:white" >Empresas</label>
+      <br>
+      <p style="color: red; font-size:13px; margin-top:5px;" v-if="errors.empresa" >{{ errors.empresa }}</p>
 
-      <div v-for="empresa in empresas" :key="empresa.id" >
+      <div style="color: white" v-for="empresa in empresas" :key="empresa.id" >
         
         <br>
         <br>
@@ -37,11 +39,11 @@
                 >
               
                 <label> {{ empresa.razao }} </label>
-         
     </div>
 
       <br>
-
+      
+      <br>
       <div id="alinhar">
         <button type="submit">Cadastrar</button>
         <a href="/user/profile">Voltar</a>
@@ -63,18 +65,18 @@ import { useForm } from '@inertiajs/vue3';
 
 
 const props = defineProps({
-    errors: Array,
-    empresas: Object,
+  errors: Array,
+  empresas: Object,
 
 })
 
 
 
 const form = useForm({
-    user: '',
-    email: '', 
-    password: '',
-    empresas: [],
+  user: '',
+  email: '',
+  password: '',
+  empresas: [],
 })
 
 </script>

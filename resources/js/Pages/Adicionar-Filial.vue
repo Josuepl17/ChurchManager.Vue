@@ -27,8 +27,8 @@
             </p>
           </div>
   
-          <div style="color: white;">
-            <div v-for="user in users" :key="user.id">
+
+            <div style="color: white" v-for="user in users" :key="user.id">
               <input
                 type="checkbox"
                 :id="'user_id' + user.id"
@@ -37,7 +37,7 @@
               >
               <label :for="'user_id' + user.id">{{ user.nome }}</label>
             </div>
-          </div>
+
   
           <br>
   
