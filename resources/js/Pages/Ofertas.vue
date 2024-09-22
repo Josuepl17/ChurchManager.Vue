@@ -48,7 +48,7 @@ Ofertas
 
 
 <div id="formulario-registro">
-    <form @submit.prevent="form.get('/registrar/oferta')" >
+    <form @submit.prevent="form.post('/registrar/oferta')" >
         <input type="date" name="data" id="data" v-model="form.datereg" autocomplete="off" required>
         <input type="number" step="0.01" name="valor" id="valor" v-model="form.valor" autocomplete="off" required placeholder="Valor">
         <button type="submit">Registar Oferta</button>
