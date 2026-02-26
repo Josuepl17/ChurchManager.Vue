@@ -1,0 +1,166 @@
+@import "tailwindcss";
+@import "./botoes.css";
+@import "./tabelas.css";
+@import "./formularios.css";
+@import "./conteudo_layout.css";
+@import "./status.css";
+@import "./dropdown.css";
+
+@source '../views/**/*.blade.php';
+@source '../js/**/*.vue';
+@source '../js/**/*.js';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme inline {
+    --font-sans: Instrument Sans, ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+:root {
+    /* Cores Principais (Dark Mode - Azul) */
+    --cm-gradient-blue: linear-gradient(135deg, #1e3a8a, #3b82f6, #93c5fd);
+    --radial-blue: radial-gradient(closest-side, #2563eb, transparent);
+    --cm-gradient-blue-dark: linear-gradient(
+        135deg,
+        #17255469,
+        #1e40af85,
+        #1d4ed82f
+    );
+    --cm-gradient-stops: #2563eb, #3b82f6, #93c5fd;
+    --cm-cor-solida: #3b82f6;
+
+    --superior-top: linear-gradient(135deg, var(--fundo-principal));
+
+    /* Fundos */
+    --fundo-principal-escuro: rgb(18, 18, 20);
+    --fundo-principal: rgb(27, 24, 27);
+    --fundo-superior: rgb(37, 37, 42);
+    --fundo-mais-superior: rgb(39, 39, 42);
+    --fundo-inputs-botoes: rgb(55, 65, 81);
+    --modal: rgba(31, 41, 55, 0.829);
+    --fundo-card: linear-gradient(
+        135deg,
+        var(--fundo-superior),
+        var(--fundo-principal)
+    );
+
+    /* Textos */
+    --texto-primario: #e5e7eb;
+    /* gray-200 */
+    --texto-secundario: #9ca3af;
+    /* gray-400 */
+    --texto-terciario: #6b7280;
+    /* gray-500 */
+    --texto-inverso: #000000;
+
+    /* Bordas */
+    --borda-padrao: #3f3f46;
+    /* zinc-700 */
+    --borda-fina: #27272a;
+    /* zinc-800 */
+    --borda-foco: #60a5fa;
+    /* blue-400 */
+    --borda-header: rgba(59, 130, 246, 0.4);
+    /* blue-500 with opacity */
+
+    /* Inputs */
+    --input-placeholder: #6b7280;
+
+    /* Sombras */
+    --sombra-card: none;
+    --sombra-hover: 0 0 2px var(--cm-cor-solida);
+
+    /* Status Badge Colors (Dark) */
+    --status-sucesso-bg: rgba(34, 197, 94, 0.15);
+    --status-sucesso-texto: #86efac;
+    --status-perigo-bg: rgba(239, 68, 68, 0.15);
+    --status-perigo-texto: #fca5a5;
+    --status-alerta-bg: rgba(245, 158, 11, 0.15);
+    --status-alerta-texto: #f59e0b;
+    --status-info-bg: rgba(59, 130, 246, 0.15);
+    --status-info-texto: #3b82f6;
+    --status-principal-bg: rgba(0, 94, 131, 0.4);
+    --status-principal-texto: #ffffff;
+    --status-neutro-bg: rgba(139, 92, 246, 0.15);
+    --status-neutro-texto: #a78bfa;
+    --status-destaque-bg: rgba(6, 182, 212, 0.15);
+    --status-destaque-texto: #22d3ee;
+}
+
+html.theme-white {
+    --cm-gradient-blue: linear-gradient(135deg, #2563eb, #3b82f6, #93c5fd);
+    --radial-blue: radial-gradient(closest-side, #2563eb, transparent);
+    --cm-gradient-blue-dark: linear-gradient(135deg, #1e3a8a, #1d4ed8, #2563eb);
+    --cm-gradient-stops: #3b82f6, #60a5fa, #93c5fd;
+    --cm-cor-solida: #2563eb;
+
+    --superior-top: var(--cm-gradient-blue-dark);
+    /* Fundos */
+    --fundo-principal: #ffffff;
+    --fundo-principal-escuro: #f1f5f9;
+    --fundo-superior: #f1f5f9;
+    --fundo-mais-superior: #ffffff;
+    --fundo-inputs-botoes: #f8fafc;
+    --fundo-card: #f1f5f9;
+    --modal: rgba(15, 23, 42, 0.85);
+
+    /* Textos */
+    --texto-primario: #0f172a;
+    --texto-secundario: #334155;
+    --texto-terciario: #64748b;
+    --texto-inverso: #ffffff;
+
+    /* Bordas */
+    --borda-padrao: #e5e7eb;
+    --borda-fina: #e2e8f0;
+    --borda-foco: #2563eb;
+    --borda-header: #cbd5e1;
+}
+
+* {
+    user-select: none;
+}
+
+*::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+    border: none;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+html.theme-white *::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+}
+html.theme-white *::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+*::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+html, body {
+    scroll-behavior: smooth;
+    color: var(--texto-primario);
+    background-color: var(--fundo-principal);
+}
+
+html.theme-white, 
+html.theme-white body {
+    background-color: #ffffff !important;
+}

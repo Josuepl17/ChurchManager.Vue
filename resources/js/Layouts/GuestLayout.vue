@@ -1,19 +1,29 @@
 <script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import { Link } from '@inertiajs/vue3';
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-        <div>
-            <Link href="/">
-                <ApplicationLogo class="w-20 h-20 fill-current text-gray-500" />
-            </Link>
-        </div>
-
+    <div
+        class="min-h-screen flex flex-col items-center justify-center bg-[#0f172a] relative overflow-hidden font-sans"
+    >
+        <!-- Elementos de fundo decorativos -->
         <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg"
-        >
+            class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none"
+        ></div>
+        <div
+            class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"
+        ></div>
+
+        <div class="z-10 w-full flex flex-col items-center">
+            <div class="mb-6">
+                <Link href="/">
+                    <ApplicationLogo
+                        class="w-20 h-20 fill-current text-white drop-shadow-lg"
+                    />
+                </Link>
+            </div>
+
             <slot />
         </div>
     </div>

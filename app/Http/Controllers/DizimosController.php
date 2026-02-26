@@ -27,67 +27,52 @@ class DizimosController extends Controller
 {
     /*Dizimos Por Usuario*/
 
-//......................................................Parte 1................................................//
+    //......................................................Parte 1................................................//
 
 
     public function filter_page()
     {
-       
-
-        
-        // Obtendo as datas e outros parâmetros da sessão
-        $dataini = Session()->get('dataini_d');
-        $datafi = Session()->get('datafi_d');
         $empresa_id = Auth::user()->empresa_id;
-        $membro_id = Session()->get('membro_id');
-        $nome = Session()->get('nome');
-        
-        // Definindo a consulta base
-        $query = dizimos::where('empresa_id', $empresa_id)
-                        ->where('membro_id', $membro_id);
-        
-        // Adicionando o filtro de datas somente se ambas as datas forem definidas
-        if ($dataini && $datafi) {
-            $query->whereBetween('datereg', [$dataini, $datafi]);
-        }
-        
-        // Executando a consulta e formatando os dados
+
+        // Buscando todos os dízimos da empresa
+        $dizimos = dizimos::with('membros')
+            ->where('empresa_id', $empresa_id)
+            ->orderBy('datereg', 'desc')
+            ->get()
+            ->map(function ($dizimo) {
+                // Formatar a data 'datereg' para 'd/m/Y'
+                $dizimo->datereg_formatada = Carbon::parse($dizimo->datereg)->format('d/m/Y');
+                return $dizimo;
+            });
+
         $dados = [
-            'dizimos' => $query->get()
-                               ->map(function ($dizimo) {
-                                   // Formatar a data 'datereg' para 'd/m/Y'
-                                   $dizimo->datereg = Carbon::parse($dizimo->datereg)->format('d/m/Y');
-                                   return $dizimo;
-                               }),
-        
-            'totaldizimos' => $query->clone()->get()->sum('valor'), // Usando clone para evitar modificar a consulta original
+            'dizimos' => $dizimos,
             'datanow' => Carbon::now()->format('Y-m-d'),
             'razao_empresa' => empresas::where('id', $empresa_id)->value('razao')
         ];
-        
-      
-            return Inertia::render('Dizimos', compact('dados', 'dataini', 'datafi', 'membro_id', 'nome'));
+
+        $membros = membros::where('empresa_id', $empresa_id)
+            ->orderBy('nome', 'asc')
+            ->get();
+
+        return Inertia::render('Dizimos', compact('dados', 'membros'));
     }
 
-//......................................................Parte 2................................................//
-
-        public function filtro(Request $request){
-          //  dd($request->all());
-            Session()->put('dataini_d', $request->dataini);
-            Session()->put('datafi_d', $request->datafi);
-            Session()->put('membro_id', $request->membro_id);
-            Session()->put('nome', $request->nome);
-            return redirect('/tela/dizimos');
-        }
+    //......................................................Parte 2................................................//
 
 
 
     public function botao_registrar_dizimo(request $request)
     {
-       
+
         if (MeuServico::Verificar($request->datereg) == true) {
-           // dd($request->all());
+            // dd($request->all());
             $dados = $request->only('id', 'datereg', 'valor', 'membro_id');
+
+            // Buscar o nome do membro para salvar redundância
+            $membro = membros::find($request->membro_id);
+            $dados['nome'] = $membro ? $membro->nome . ' ' . $membro->sobrenome : 'Membro não encontrado';
+
             $dados['user_id'] = Auth::id();
             $dados['empresa_id'] = Auth::user()->empresa_id;
             $dados['valor'] = str_replace(',', '.', $dados['valor']);
@@ -95,26 +80,27 @@ class DizimosController extends Controller
             Session()->flash('sucesso', 'Item criado com Sucesso');
 
         } else {
-            Session()->flash('falha',  'Falha ao criar item, Caixa Fechado');
+            Session()->flash('falha', 'Falha ao criar item, Caixa Fechado');
         }
 
-            return redirect('/tela/dizimos');
-        }
+        return redirect('/tela/dizimos');
+    }
 
-//......................................................Parte 3................................................//
+    //......................................................Parte 3................................................//
 
-    public function botao_excluir_dizimo(request $request) {
-            $data = dizimos::find($request->id);
-            
+    public function botao_excluir_dizimo(request $request)
+    {
+        $data = dizimos::find($request->id);
+
         if (MeuServico::Verificar($data->datereg)) {
             $destroy = $request->id;
             dizimos::destroy($destroy);
-            Session()->flash('sucesso',  'Item Apagado com Sucesso');
+            Session()->flash('sucesso', 'Item Apagado com Sucesso');
         } else {
-            Session()->flash('falha',  'Falha ao apagar item, Caixa Fechado');
+            Session()->flash('falha', 'Falha ao apagar item, Caixa Fechado');
         }
-           
-            return redirect('/tela/dizimos');
+
+        return redirect('/tela/dizimos');
     }
 
 

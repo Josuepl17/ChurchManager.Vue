@@ -1,9 +1,11 @@
+import '../css/app.css';
 import { createApp, h } from 'vue';
 import { Link } from '@inertiajs/vue3'; // importei o componenete 
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
-import Layout from './Components/Layout.vue';
+import Layout from './Components/Layout-Principal.vue';
+import GuestLayout from './Components/GuestLayout.vue';
 import { useForm } from '@inertiajs/vue3';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -17,6 +19,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .component('layout', Layout)
+            .component('GuestLayout', GuestLayout)
             .component('useForm', useForm)
             .component('Link', Link ) // registrei o componente Link do imnertia 
             .mount(el);

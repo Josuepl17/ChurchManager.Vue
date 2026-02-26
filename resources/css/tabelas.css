@@ -1,0 +1,103 @@
+/* estilos da antiga tabela removidos */
+
+/* Lista em cards moderna */
+.lista-cards {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: calc(100dvh - 12rem);
+    overflow: auto;
+
+    scrollbar-width: thin;
+
+    scrollbar-color: var(--cm-cor-solida) var(--fundo-superior);
+}
+
+.card-info {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 0.4rem;
+
+
+    border-radius: 0.4rem;
+    border: 1px solid var(--borda-padrao);
+    background-image: var(--fundo-card);
+    border-left: 2px solid var(--cm-cor-solida);
+    padding: 0.4rem 0.6rem;
+    max-height: 10.5rem;
+    
+    box-shadow: var(--sombra-card);
+}
+
+.card-info:hover {
+    box-shadow: var(--sombra-hover);
+}
+
+
+.lista-cards .card-info + .card-info {
+    border-top: none;
+    margin-top: 0.4rem; 
+    border-top: 1px solid var(--borda-padrao); 
+}
+
+
+.lista-cards .card-info + .card-info {
+    border-top: 1px solid var(--borda-padrao); 
+}
+
+
+.card-conteudo {
+   display: flex;
+   flex-direction: column;
+   margin-left: 0.5rem;
+   justify-content: center;
+   align-items: flex-start;
+   width: 100%;
+}
+
+
+.card-titulo {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--texto-primario);
+    padding-bottom: 0.2rem;
+    white-space: nowrap;       
+}
+.card-sub {
+    font-size: 0.78rem;
+    color: var(--texto-secundario);
+    padding-bottom: 0.2rem;
+}
+.card-acoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 0.4rem;
+    padding-bottom: 0.2rem;
+}
+.card-acoes.distante {
+    margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    .card-info {
+        grid-template-columns: 1fr;
+        max-height: 10.9rem;
+
+    }
+
+    .card-titulo{
+    width: 18ch;               
+    overflow: hidden;           
+    text-overflow: ellipsis;   
+    }
+    .card-acoes {
+        justify-content: flex-start;
+    }
+
+    .oculto {
+    display: none;
+}
+}

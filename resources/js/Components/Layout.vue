@@ -112,8 +112,6 @@
     </script>
 
 <style>
-@import "..\Components\css\layout.css";
-@import "..\Components\css\oferta-dizimo-despesas-caixa.css";
 </style>
 
 

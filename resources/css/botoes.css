@@ -1,0 +1,183 @@
+.btn-acessar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+   border-radius: 10px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-image: var(--cm-gradient-blue);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  transition: background-position 800ms ease;
+
+}
+
+.btn-acessar:hover {
+  background-position: 100% 50%;
+}
+
+
+.btn-acessar:active {
+  transform: translateY(1px);
+}
+
+.btn-acessar svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.btn-envio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: rgb(0, 66, 6);
+
+}
+
+.btn-envio:active {
+  transform: translateY(1px);
+}
+
+
+
+.btn-envio svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+
+
+.btn-cancelar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+   border-radius: 10px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--texto-primario);
+  background-color: var(--fundo-superior);
+  border: 1px solid var(--borda-padrao);
+}
+
+.btn-cancelar:active {
+  transform: translateY(1px);
+}
+
+
+
+.gaveta {
+  position: relative; /* referência para o absolute */
+  display: inline-block;
+}
+
+/* botão */
+.btn-abrir{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--texto-primario);
+  background-color: var(--fundo-superior);
+  cursor: pointer;
+  border: 1px solid var(--cm-cor-solida);
+}
+
+/* remove marcador */
+.gaveta summary {
+  list-style: none;
+}
+.gaveta summary::-webkit-details-marker {
+  display: none;
+}
+
+/* gaveta flutuante */
+.gaveta-conteudo {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.4rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  background: var(--fundo-inputs-botoes);
+  padding: 0.4rem;
+  border-radius: 10px;
+  z-index: 1000;
+  min-width: 160px;
+}
+
+/* itens */
+.btn-item {
+  border-radius: 8px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  background: var(--fundo-inputs-botoes);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.btn-item:hover {
+  background: rgba(75, 85, 99, 0.9);
+}
+
+/* seta */
+.seta {
+  transition: transform 0.2s ease;
+}
+.gaveta[open] .seta {
+  transform: rotate(180deg);
+}
+
+
+.btn-abrir svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+
+.btn-deletar {
+    background: none;
+    border: none;
+    padding: 0.375rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+    color: var(--texto-secundario);
+    border: 1px solid var(--cm-cor-solida);
+}
+
+.btn-deletar svg {
+   height: 1rem;
+  width: 1rem;
+}
+
+.btn-deletar:hover {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .btn-acessar {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.8rem;
+    }
+}

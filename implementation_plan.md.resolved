@@ -1,0 +1,48 @@
+# Reestruturação CSS e Layout - ChurchManager.Vue
+
+O objetivo desta refatoração é modernizar o `ChurchManager.Vue` utilizando como base a arquitetura e estilo do projeto `PsiFlow`, mas aplicando um tema AZUL como esquema de cores principal. O layout antigo será substituído por um layout moderno, responsivo com modais, e os estilos serão segmentados em arquivos separados.
+
+O plano envolverá atualizar para o Tailwind CSS v4, criar novos componentes de UI ([modal.vue](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/js/pages/Components/modal.vue), [Layout-Principal.vue](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/js/pages/Layout/Layout-Principal.vue), etc.) no ChurchManager e migrar os formulários (como Dízimos, Ofertas, Membros) para abrirem em modais em vez de páginas avulsas.
+
+## Proposed Changes
+
+### 1. Migração de Estilos e Definição do Tema Azul (CSS Global)
+
+Baseado na estrutura do PsiFlow (que tem [resources/css/botoes.css](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/css/botoes.css), [formularios.css](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/css/formularios.css), etc.):
+
+- #### [NEW] [resources/css/app.css](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/css/app.css) (ou ajustado)
+- #### [NEW] [resources/css/botoes.css](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/css/botoes.css)
+- #### [NEW] [resources/css/formularios.css](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/css/formularios.css)
+- #### [NEW] [resources/css/tabelas.css](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/css/tabelas.css)
+- #### [NEW] [resources/css/status.css](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/css/status.css)
+- #### [NEW] [resources/css/dropdown.css](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/css/dropdown.css)
+- **Tema Azul:** Os arquivos acima serão populados com variáveis CSS inspiradas no PsiFlow (`--fundo-principal`, `--texto-primario`, etc.), porém os gradientes e cores primárias serão baseados em tons de azul (`blue-500` até `blue-900`, e gradientes azuis para a barra superior).
+
+### 2. Componentes Estruturais e de UI
+
+- #### [NEW] [resources/js/Components/modal.vue](file:///c:/Users/Josue/Documents/GitHub/ChurchManager.Vue/resources/js/Components/modal.vue) (Copiado/adaptado do PsiFlow)
+- #### [NEW] `resources/js/Components/Layout-Principal.vue` (Substituirá o `Layouts/AppLayout.vue` atual, trazendo o menu lateral dinâmico e topbar azul)
+- #### [NEW] `resources/js/Components/Logo.vue` (ou atualização do atual)
+- #### [NEW] Arquivos extras de ícones (SVG) poderão ser encapsulados em componentes para organização.
+
+### 3. Refatoração dos Formulários e Páginas
+
+As seguintes páginas contêm formulários que serão migrados para Modais nas telas de listagem:
+
+- #### [MODIFY] [resources/js/Pages/Dizimos.vue](file:///c:/Users/Josue/Documents/GitHub/ChurchManager.Vue/resources/js/Pages/Dizimos.vue)
+- #### [MODIFY] [resources/js/Pages/Ofertas.vue](file:///c:/Users/Josue/Documents/GitHub/ChurchManager.Vue/resources/js/Pages/Ofertas.vue)
+- #### [MODIFY] [resources/js/Pages/Despesas.vue](file:///c:/Users/Josue/Documents/GitHub/ChurchManager.Vue/resources/js/Pages/Despesas.vue)
+- #### [MODIFY] [resources/js/Pages/FormMembro.vue](file:///c:/Users/Josue/Documents/GitHub/ChurchManager.Vue/resources/js/Pages/FormMembro.vue) -> Passará a ser acionado via Modal dentro da listagem de membros.
+- #### [MODIFY] [resources/js/Pages/Caixa.vue](file:///c:/Users/Josue/Documents/GitHub/ChurchManager.Vue/resources/js/Pages/Caixa.vue)
+
+_(Esta lista será expandida durante a execução, convertendo cada formulário um a um para usar o `<modal>` base)._
+
+## Verification Plan
+
+### Testes Manuais
+
+1. Iniciar o servidor com `php artisan serve` e o Vite com `npm run dev`.
+2. Acessar a aplicação no navegador (e.g. `http://localhost:8000`).
+3. Verificar se o Layout Principal (menu lateral e topo) carrega corretamente e exibe o tema azul.
+4. Navegar para sessões (Dízimos, Ofertas, Membros) e testar a abertura dos Modais, verificando se o CSS de formulários [formularios.css](file:///c:/Users/Josue/Documents/GitHub/PsiFlow/resources/css/formularios.css) está sendo devidamente aplicado.
+5. Observar responsividade em dispositivos mobile (o menu deve retrair).

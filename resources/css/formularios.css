@@ -1,0 +1,296 @@
+.formulario {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.grupo {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.rotulo {
+  font-size: 0.875rem;
+  color: var(--texto-primario);
+  font-weight: 500;
+}
+
+.campo-input {
+  height: 2.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--borda-padrao);
+  background-color: var(--fundo-inputs-botoes);
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--texto-primario);
+}
+
+select.campo-input {
+  appearance: none;
+  background-color: var(--fundo-inputs-botoes);
+
+  color: var(--texto-primario);
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1rem 1rem;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+
+}
+
+option {
+  color: var(--texto-primario);
+}
+
+
+select.campo-input:hover {
+  background-color: var(--fundo-inputs-botoes);
+}
+
+
+select.campo-input:focus {
+  outline: none;
+  border-color: var(--borda-foco);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+select.campo-input::-ms-expand {
+  display: none;
+}
+
+.campo-input[multiple] {
+  height: auto;
+  min-height: 10rem;
+  padding: 0.5rem;
+}
+
+.campo-input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.campo-input:focus {
+  outline: none;
+  border-color: var(--borda-foco);
+}
+
+.acoes-formulario {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn-cancelar {
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-cancelar:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+}
+
+.btn-envio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+.btn-envio:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.campo-texto {
+  width: 100%;
+  border: 1px solid var(--borda-padrao);
+  background-color: var(--fundo-inputs-botoes);
+  padding: 0.75rem;
+  border-radius: 0.3rem;
+  font-size: 0.875rem;
+  color: var(--texto-primario);
+}
+
+.campo-texto::placeholder {
+  color: var(--input-placeholder);
+}
+
+.campo-texto:focus {
+  outline: none;
+  border-color: var(--borda-foco);
+}
+
+.acoes-modal {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+select.campo-input option {
+  background-color: var(--fundo-inputs-botoes);
+  color: var(--texto-primario);
+  padding: 5px;
+}
+
+select.campo-input option:checked {
+  background-color: var(--cm-cor-solida);
+  color: white;
+}
+
+select.campo-input option[disabled] {
+  color: var(--texto-terciario);
+}
+
+select.campo-input optgroup {
+  color: var(--texto-secundario);
+  font-weight: 600;
+}
+
+.dias-semana-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.dia-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--borda-fina);
+  background-color: var(--fundo-superior);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.dia-checkbox:hover {
+  border-color: var(--borda-padrao);
+  background-color: var(--fundo-superior);
+  transform: translateY(-1px);
+}
+
+.dia-checkbox input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  accent-color: var(--cm-cor-solida);
+}
+
+.dia-checkbox input[type="checkbox"]:checked+.dia-label {
+  color: var(--cm-cor-solida);
+  font-weight: 600;
+}
+
+.dia-checkbox:has(input:checked) {
+  border-color: var(--cm-cor-solida);
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.dia-label {
+  font-size: 0.875rem;
+  color: var(--texto-primario);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.busca .campo {
+  height: 2.25rem;
+  width: 18rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--borda-fina);
+  background-color: var(--fundo-superior);
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--texto-primario);
+  border: 1px solid var(--borda-padrao);
+}
+
+html.theme-white .busca .campo {
+  border: 1px solid var(--borda-padrao);
+}
+
+.busca .campo::placeholder {
+  color: var(--input-placeholder);
+}
+
+
+
+.grupo-filtros-data {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-image: var(--fundo-card);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--borda-padrao);
+}
+
+.campo-data {
+  background-color: transparent;
+  border: none;
+  font-size: 0.875rem;
+  width: auto;
+  min-width: 8rem;
+  outline: none;
+  padding: 0.25rem;
+  font-family: inherit;
+}
+
+.separador-data {
+  color: var(--texto-secundario);
+  font-size: 0.875rem;
+}
+
+.btn-exportar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border-radius: 0.375rem;
+  color: var(--cm-cor-solida);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-exportar:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.btn-exportar svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+
+@media (max-width: 768px) {
+  .busca .campo {
+    width: 7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .busca .campo {
+    display: none;
+  }
+}

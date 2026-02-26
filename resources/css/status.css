@@ -1,0 +1,72 @@
+.status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+/* Tipos Base vinculados às variáveis do app.css */
+.status.ativo,
+.status.concluido,
+.status.Concluido {
+    background-color: var(--status-sucesso-bg);
+    color: var(--status-sucesso-texto);
+    border-color: rgba(34, 197, 94, 0.1);
+}
+
+.status.inativo,
+.status.cancelado,
+.status.Cancelado,
+.status.falta,
+.status.Falta,
+.status.status-motivo {
+    background-color: var(--status-perigo-bg);
+    color: var(--status-perigo-texto);
+    border-color: rgba(239, 68, 68, 0.1);
+}
+
+.status.agendado,
+.status.Agendado {
+    background-color: var(--status-alerta-bg);
+    color: var(--status-alerta-texto);
+    border-color: rgba(245, 158, 11, 0.1);
+}
+
+.status.visualizado,
+.status.Visualizado {
+    background-color: var(--status-info-bg);
+    color: var(--status-info-texto);
+    border-color: rgba(59, 130, 246, 0.1);
+}
+
+.status.confirmado,
+.status.Confirmado {
+    background-color: var(--status-principal-bg);
+    color: var(--status-principal-texto);
+    border-color: rgba(0, 94, 131, 0.2);
+}
+
+.status.reagendado,
+.status.Reagendado {
+    background-color: var(--status-neutro-bg);
+    color: var(--status-neutro-texto);
+    border-color: rgba(139, 92, 246, 0.1);
+}
+
+.status.confirmacao-enviada,
+.status.Confirmação {
+    background-color: var(--status-destaque-bg);
+    color: var(--status-destaque-texto);
+    border-color: rgba(6, 182, 212, 0.1);
+}
+
+.status-linha {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}

@@ -52,7 +52,7 @@ class MembrosController extends Controller
         $dados = $request->all();
         $dados['user_id'] = Auth::id();
         $dados['empresa_id'] = Auth::user()->empresa_id;
-        $dados =  array_map('strtoupper', array_map('strval', $dados));
+        $dados = array_map('strtoupper', array_map('strval', $dados));
         membros::create($dados);
         return redirect('/');
     }
@@ -72,12 +72,13 @@ class MembrosController extends Controller
         $razao_empresa = $empresa_id->empresas->first();
         $razao_empresa = $razao_empresa->razao;
         $eventos = Eventos::where('empresa_id', Auth::user()->empresa_id)->get()
-        ->map(function ($eventos) {
-        // Formatar a data 'data_evento' para 'd/m/Y'
-        $eventos->datereg = Carbon::parse($eventos->datereg)->format('d/m/Y');
-        return $eventos;
-    });
-        return Inertia::render('Eventos', compact('eventos'));
+            ->map(function ($eventos) {
+                // Formatar a data 'data_evento' para 'd/m/Y'
+                $eventos->datereg = Carbon::parse($eventos->datereg)->format('d/m/Y');
+                return $eventos;
+            });
+        $membros = membros::where('empresa_id', Auth::user()->empresa_id)->get();
+        return Inertia::render('Eventos', compact('eventos', 'membros'));
     }
 
     public function presença_evento()
@@ -115,7 +116,7 @@ class MembrosController extends Controller
             $presenca->save();
             $membros = membros::find($presente);
             $membros->presenca += 1;
-            $membros->save(); 
+            $membros->save();
         }
 
         return redirect('/eventos');
