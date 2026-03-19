@@ -3,7 +3,6 @@
     <div class="glow glow-top"></div>
     <div class="glow glow-bottom"></div>
 
-    <a href="/cadastro/login" class="btn-register">Cadastrar-se</a>
 
     <div class="card-wrapper">
       <div class="card">
@@ -48,7 +47,11 @@
             <label class="checkbox-label">
               <input type="checkbox" /> Lembrar-me
             </label>
-            <a href="/esqueci/senha" class="link-forgot">Esqueceu a senha?</a>
+            <div class="links-group">
+                <a href="/esqueci/senha" class="link-forgot">Esqueceu a senha?</a>
+                <span class="link-sep">|</span>
+                <a href="/cadastro/login" class="link-register-inline">Cadastrar-se</a>
+            </div>
           </div>
 
           <button type="submit" class="btn-primary">Entrar no Sistema</button>
@@ -105,26 +108,6 @@ const form = useForm({
   background: rgba(99, 102, 241, 0.18);
 }
 
-.btn-register {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  padding: 10px 22px;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 999px;
-  color: rgba(255,255,255,0.75);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s;
-  z-index: 10;
-}
-.btn-register:hover {
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  border-color: rgba(255,255,255,0.35);
-}
 
 .card-wrapper {
   width: 100%;
@@ -238,14 +221,25 @@ const form = useForm({
 }
 .checkbox-label input { accent-color: #3b82f6; width: 15px; height: 15px; }
 
-.link-forgot {
-  font-size: 14px;
+.link-forgot, .link-register-inline {
+  font-size: 13px;
   font-weight: 600;
   color: #60a5fa;
   text-decoration: none;
   transition: color 0.2s;
 }
-.link-forgot:hover { color: #93c5fd; }
+.link-forgot:hover, .link-register-inline:hover { color: #93c5fd; }
+
+.links-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.link-sep {
+    color: #475569;
+    font-size: 12px;
+}
 
 .field-error {
   font-size: 12px;

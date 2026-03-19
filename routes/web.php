@@ -35,7 +35,13 @@ Route::get('/registrar/dizimo', [ControllerLogin::class, 'regdizimo']);*/
 
 /*Usuarios*/
 Route::get('/entrar/{id}', [MembrosController::class, 'Atualizar'])->middleware('auth');
-Route::get('/', [MembrosController::class, 'index'])->name('index')->middleware('auth');
+
+Route::get('/', function () {
+    return Inertia::render('LandingPage');
+})->name('landing');
+
+Route::get('/dashboard', [MembrosController::class, 'index'])->name('dashboard')->middleware('auth');
+
 Route::get('/cadastro/membro', [MembrosController::class, 'cadastro_membro']);
 Route::post('/inserir/membro', [MembrosController::class, 'botao_inserir_membro']);
 Route::get('/destroy/{id}', [MembrosController::class, 'excluir_membro']);

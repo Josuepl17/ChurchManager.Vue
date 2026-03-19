@@ -60,7 +60,7 @@
           </div>
 
           <div class="form-footer">
-            <Link href="/" class="btn-back">← Voltar para Membros</Link>
+            <Link href="/dashboard" class="btn-back">← Voltar para Membros</Link>
             <button type="submit" class="btn-primary">Cadastrar Membro</button>
           </div>
         </form>

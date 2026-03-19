@@ -22,7 +22,7 @@
             &nbsp; Menu
         </h1>
 
-        <Link class="links-1" href="/">
+        <Link class="links-1" href="/dashboard">
             <i><img src="/static/botao-home.png" alt=""></i> &nbsp; <p>Home</p>
         </Link>
 

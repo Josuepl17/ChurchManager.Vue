@@ -27,7 +27,7 @@ class MembrosController extends Controller
     public function Atualizar(Request $request)
     {
         User::where('id', Auth::id())->update(['empresa_id' => $request->id]);
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
     public function index(Request $request)
@@ -54,7 +54,7 @@ class MembrosController extends Controller
         $dados['empresa_id'] = Auth::user()->empresa_id;
         $dados = array_map('strtoupper', array_map('strval', $dados));
         membros::create($dados);
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
 
@@ -62,7 +62,7 @@ class MembrosController extends Controller
     {
         $destroy = $request->id;
         membros::destroy($destroy); //banco de dados com apagar cascade, todos os dizimos desses usuarios vão ter apagados tambem
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
 
