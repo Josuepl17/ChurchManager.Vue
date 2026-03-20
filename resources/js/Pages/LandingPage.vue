@@ -4,7 +4,7 @@
         <nav class="navbar">
             <div class="nav-content">
                 <div class="logo">
-                    <span class="logo-icon">⛪</span>
+                    <img src="/img/logo.png" alt="ChurchManager Logo" class="logo-img" />
                     <span class="logo-text">Church<span>Manager</span></span>
                 </div>
                 <div class="nav-links">
@@ -32,15 +32,22 @@
                 </div>
             </div>
             <div class="hero-visual animate-fade">
-                <div class="card-mockup">
-                    <div class="mockup-header"></div>
-                    <div class="mockup-body">
-                        <div class="mockup-line"></div>
-                        <div class="mockup-line short"></div>
-                        <div class="mockup-grid">
-                            <div class="mockup-item"></div>
-                            <div class="mockup-item"></div>
+                <div class="notebook-mockup">
+                    <div class="notebook-screen">
+                        <div class="carousel-container">
+                            <transition-group name="fade">
+                                <img 
+                                    v-for="(img, index) in screenshots" 
+                                    :key="img" 
+                                    :src="img" 
+                                    v-show="currentIndex === index"
+                                    class="carousel-image"
+                                />
+                            </transition-group>
                         </div>
+                    </div>
+                    <div class="notebook-base">
+                        <div class="notebook-trackpad"></div>
                     </div>
                 </div>
                 <div class="blob"></div>
@@ -100,6 +107,34 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { ref, onMounted, onUnmounted } from 'vue';
+
+const screenshots = [
+    '/img/ChurchManager/Screenshot_1.png',
+    '/img/ChurchManager/Screenshot_2.png',
+    '/img/ChurchManager/Screenshot_3.png',
+    '/img/ChurchManager/Screenshot_4.png',
+    '/img/ChurchManager/Screenshot_5.png',
+    '/img/ChurchManager/Screenshot_6.png',
+    '/img/ChurchManager/Screenshot_7.png',
+];
+
+const currentIndex = ref(0);
+let intervalId = null;
+
+const startCarousel = () => {
+    intervalId = setInterval(() => {
+        currentIndex.value = (currentIndex.value + 1) % screenshots.length;
+    }, 4000); // Mudar a cada 4 segundos
+};
+
+onMounted(() => {
+    startCarousel();
+});
+
+onUnmounted(() => {
+    if (intervalId) clearInterval(intervalId);
+});
 
 // Helper for route - assuming 'route' helper is available globally via Ziggy
 // If not, we'll need to manually handle the paths.
@@ -146,9 +181,16 @@ import { Link } from '@inertiajs/vue3';
 .logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     font-size: 1.5rem;
     font-weight: 800;
+}
+
+.logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
 }
 
 .logo-text span {
@@ -270,49 +312,82 @@ import { Link } from '@inertiajs/vue3';
     justify-content: center;
 }
 
-.card-mockup {
+/* Notebook Mockup */
+.notebook-mockup {
     width: 100%;
-    max-width: 450px;
-    aspect-ratio: 16/10;
-    background: var(--bg-card);
-    border-radius: 20px;
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    padding: 2rem;
+    max-width: 600px;
     position: relative;
     z-index: 2;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    perspective: 1000px;
 }
 
-.mockup-header {
-    height: 12px;
-    width: 60px;
-    background: rgba(59, 130, 246, 0.2);
-    border-radius: 6px;
-    margin-bottom: 2rem;
+.notebook-screen {
+    background: #000;
+    border-radius: 12px 12px 0 0;
+    border: 8px solid #1a1a1a;
+    border-bottom: 2px solid #1a1a1a;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
 
-.mockup-line {
-    height: 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
-    margin-bottom: 1rem;
+.carousel-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
-.mockup-line.short {
-    width: 60%;
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-.mockup-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 2rem;
+.notebook-base {
+    height: 15px;
+    background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+    border-radius: 0 0 12px 12px;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-.mockup-item {
-    height: 80px;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
-    border-radius: 12px;
+.notebook-base::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25%;
+    height: 5px;
+    background: #333;
+    border-radius: 0 0 5px 5px;
+}
+
+.notebook-trackpad {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 0 0 4px 4px;
+}
+
+/* Transições do Carrossel */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 1.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 
 .blob {
@@ -320,9 +395,9 @@ import { Link } from '@inertiajs/vue3';
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 120%;
-    height: 120%;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    width: 130%;
+    height: 130%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
     z-index: 1;
 }
 

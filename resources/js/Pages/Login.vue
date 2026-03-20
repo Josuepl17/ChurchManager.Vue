@@ -8,10 +8,7 @@
       <div class="card">
 
         <div class="icon-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-          </svg>
+          <img src="/img/logo.png" alt="Logo" class="logo-login" />
         </div>
 
         <h1 class="card-title">Bem-vindo</h1>
@@ -128,17 +125,23 @@ const form = useForm({
 }
 
 .icon-box {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #2563eb, #60a5fa);
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px auto;
-  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
-.icon-box svg { width: 28px; height: 28px; color: #fff; }
+.logo-login { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: contain;
+}
 
 .card-title {
   font-size: 24px;
