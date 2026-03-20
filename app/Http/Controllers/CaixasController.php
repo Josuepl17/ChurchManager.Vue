@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\caixas;
-use App\Models\despesas;
-use App\Models\ofertas;
-use App\Models\membros;
+use App\Models\Caixa;
+use App\Models\Despesa;
+use App\Models\Oferta;
+use App\Models\Membro;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\dizimos;
+use App\Models\Dizimo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use GuzzleHttp\Promise\Create;
 use App\Http\Controllers\ControllerIgreja;
-use App\Models\empresas;
+use App\Models\Empresa;
 use App\Services\MeuServico;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Mailer\Transport\Dsn;
@@ -33,14 +33,14 @@ class CaixasController extends Controller
         $empresa_id = Auth::user()->empresa_id;
 
          $dados = [
-            'totalofertas' => ofertas::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataini, $datafi])->sum('valor'),
-            'totaldespesas' => despesas::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataini, $datafi])->sum('valor'),
-            'totaldizimos' => dizimos::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataini, $datafi])->sum('valor'),
+            'totalofertas' => Oferta::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataini, $datafi])->sum('valor'),
+            'totaldespesas' => Despesa::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataini, $datafi])->sum('valor'),
+            'totaldizimos' => Dizimo::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataini, $datafi])->sum('valor'),
             'datanow' => Carbon::now()->format('Y-m-d'),
-            'qtymembros' => membros::where('empresa_id', $empresa_id)->count(),
+            'qtymembros' => Membro::where('empresa_id', $empresa_id)->count(),
             'dataini' => $request->dataini,
             'datafi' => $request->datafi,
-            'razao_empresa' => empresas::where('id', $empresa_id)->value('razao'),
+            'razao_empresa' => Empresa::where('id', $empresa_id)->value('razao'),
 
         ];
 
@@ -62,12 +62,12 @@ class CaixasController extends Controller
         $empresa_id = Auth::user()->empresa_id;
 
         $dados = [
-            'ofertas' => ofertas::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->get(),
-            'despesas' => despesas::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->get(),
-            'dizimos' => dizimos::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->get(),
-            'totalofertas' => ofertas::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->sum('valor'),
-            'totaldespesas' => despesas::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->sum('valor'),
-            'totaldizimos' => dizimos::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->sum('valor'),
+            'ofertas' => Oferta::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->get(),
+            'despesas' => Despesa::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->get(),
+            'dizimos' => Dizimo::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->get(),
+            'totalofertas' => Oferta::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->sum('valor'),
+            'totaldespesas' => Despesa::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->sum('valor'),
+            'totaldizimos' => Dizimo::where('empresa_id', $empresa_id)->whereBetween('datereg', [$dataIni, $dataFi])->sum('valor'),
         ];
 
         $pdf = pdf::loadView('relatorios-pdf.relatorioPDF', $dados); /*Carrega os Dados do PDF*/
@@ -84,7 +84,7 @@ class CaixasController extends Controller
             $dados = $request->except('_token');
             $dados['user_id'] = Auth::id(); //acessa o ID do usuario Autenticado
             $dados['empresa_id'] = Auth::user()->empresa_id; // acessa o dado da coluna do usuario conectado QUE SE ALTERA TODA VEZ QUE ENTRA 
-            caixas::create($dados);
+            Caixa::create($dados);
             session()->flash('alert', 'Caixa Fechado Com Sucesso');
             return redirect('/relatorio');
         } else {
@@ -100,16 +100,16 @@ class CaixasController extends Controller
     public function indexcaixa()
     {
         $empresa_id = Auth::user()->empresa_id;
-        $dados = caixas::where('empresa_id', $empresa_id)->get();
-        $razao_empresa = empresas::where('id', $empresa_id)->value('razao');
-        $saldo = caixas::where('empresa_id', $empresa_id)->sum('saldo');;
+        $dados = Caixa::where('empresa_id', $empresa_id)->get();
+        $razao_empresa = Empresa::where('id', $empresa_id)->value('razao');
+        $saldo = Caixa::where('empresa_id', $empresa_id)->sum('saldo');;
         return Inertia::render('Caixa', compact('dados', 'saldo', 'razao_empresa'));
     }
 
     public function destroy_caixa(Request $request)
     {
         $destroy = $request->id;
-        caixas::destroy($destroy);
+        Caixa::destroy($destroy);
         return redirect('/indexcaixa');
     }
 

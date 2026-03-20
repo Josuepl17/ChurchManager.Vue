@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Http\Controllers\Controller;
-use App\Models\caixas;
-use App\Models\empresas;
+use App\Models\Caixa;
+use App\Models\Empresa;
 use App\Models\User;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
@@ -17,9 +17,9 @@ class MeuServico
     public static function Verificar($data)
     {
         $empresa_id = Auth()->user()->empresa_id;
-        $primeiroregistro = caixas::where('empresa_id', $empresa_id)->value('dataini') ?? '';
+        $primeiroregistro = Caixa::where('empresa_id', $empresa_id)->value('dataini') ?? '';
 
-        $ultimoregistro = caixas::where('empresa_id', $empresa_id)->latest('datafi')->first();
+        $ultimoregistro = Caixa::where('empresa_id', $empresa_id)->latest('datafi')->first();
         $ultimo = $ultimoregistro->datafi ?? '';
 
         if ($data > $primeiroregistro  && $data > $ultimo) {
@@ -63,7 +63,7 @@ class MeuServico
 
 
     public static function verificar_empresa($request){
-        if (empresas::where('cnpj', $request->cnpj)->first()){
+        if (Empresa::where('cnpj', $request->cnpj)->first()){
             return true;
         } else{
             return false;

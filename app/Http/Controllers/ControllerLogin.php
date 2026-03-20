@@ -6,18 +6,17 @@ use App\Http\Requests\FormFilial;
 use App\Http\Requests\FormFilialUsers;
 use App\Jobs\EnvioEmail;
 use App\Mail\EnvioEmail as MailEnvioEmail;
-use App\Models\caixas;
-use App\Models\despesas;
-use App\Models\ofertas;
-use App\Models\membros;
+use App\Models\Caixa;
+use App\Models\Despesa;
+use App\Models\Oferta;
+use App\Models\Membro;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\dizimos;
-use App\Models\empresa;
-use App\Models\empresas;
+use App\Models\Dizimo;
+use App\Models\Empresa;
 use App\Models\Relacionamento;
 use App\Models\Relacionamentos;
-use App\Models\user_empresas as ModelsRelacionamentos;
-use App\Models\user_empresas;
+use App\Models\UserEmpresa as ModelsRelacionamentos;
+use App\Models\UserEmpresa;
 use App\Models\User;
 use App\Services\MeuServico;
 use Illuminate\Http\Request;
@@ -57,7 +56,7 @@ class ControllerLogin extends Controller
             return back()->withInput()->withErrors(['email' => 'Esse CNPJ Já Está Cadastrado']);
         }
 
-        $empresa = empresas::create([
+        $empresa = Empresa::create([
             'razao' => $request->razao,
             'cnpj' => $request->cnpj
         ]);
@@ -70,7 +69,7 @@ class ControllerLogin extends Controller
         $user->nivel = 'admin';
         $user->save();
 
-        $user_empresas = new user_empresas();
+        $user_empresas = new UserEmpresa();
         $user_empresas->user_id = $user->id;
         $user_empresas->empresa_id = $empresa->id;
         $user_empresas->save();
@@ -100,21 +99,21 @@ class ControllerLogin extends Controller
     public function tela_usuarios()
     {
         $user_id = Auth::user()->id;
-        $relacionamentos = user_empresas::where('user_id', $user_id)->pluck('empresa_id'); // peguei as empresas relacionadas ao meu usuario.
-        $empresas = user_empresas::whereIn('empresa_id', $relacionamentos)->pluck('user_id'); // peguei todos os usuarios relacionados as empresas
+        $relacionamentos = UserEmpresa::where('user_id', $user_id)->pluck('empresa_id'); // peguei as empresas relacionadas ao meu usuario.
+        $empresas = UserEmpresa::whereIn('empresa_id', $relacionamentos)->pluck('user_id'); // peguei todos os usuarios relacionados as empresas
         $users = User::whereIn('id', $empresas)
             ->where('id', '!=', Auth::user()->id)
             ->get(); // busquei
 
-        //$razao_empresa = empresas::where('id', auth()->user()->empresa_id)->value('razao');
+        //$razao_empresa = Empresa::where('id', auth()->user()->empresa_id)->value('razao');
         return Inertia::render('Tela-Users', compact('users'));
     }
 
     public function formulario_adicionar_usuario()
     {
         $user_id = Auth::user()->id;
-        $dados = user_empresas::where('user_id', $user_id)->pluck('empresa_id');
-        $empresas = empresas::whereIn('id', $dados)->get();
+        $dados = UserEmpresa::where('user_id', $user_id)->pluck('empresa_id');
+        $empresas = Empresa::whereIn('id', $dados)->get();
         return Inertia::render('Adicionar-Users', compact('empresas'));
     }
 
@@ -138,7 +137,7 @@ class ControllerLogin extends Controller
             $user->save();
 
             foreach ($empresasMarcadas as $emp) {
-                $user_empresas = new user_empresas();
+                $user_empresas = new UserEmpresa();
                 $user_empresas->user_id = $user->id;
                 $user_empresas->empresa_id = $emp;
                 $user_empresas->save();
@@ -156,10 +155,10 @@ class ControllerLogin extends Controller
     public function formulario_editar_usuario(Request $request)
     {
         $user_id = Auth::user()->id;
-        $dados = user_empresas::where('user_id', $user_id)->pluck('empresa_id');
-        $empresas = empresas::whereIn('id', $dados)->get();
+        $dados = UserEmpresa::where('user_id', $user_id)->pluck('empresa_id');
+        $empresas = Empresa::whereIn('id', $dados)->get();
         $user_editar = User::find($request->user_id);
-        $empresasSelecionadas = user_empresas::where('user_id', $user_editar->id)->pluck('empresa_id')->toArray();
+        $empresasSelecionadas = UserEmpresa::where('user_id', $user_editar->id)->pluck('empresa_id')->toArray();
         return Inertia::render('Editar-User', compact('empresas', 'user_editar', 'empresasSelecionadas'));
     }
 
@@ -180,7 +179,7 @@ class ControllerLogin extends Controller
                 if (count($empresasMarcadas) == 0) {
                     dd("deve ter pelo menos 1");
                 } else {
-                    user_empresas::where('user_id', $request->user_id)->delete();
+                    UserEmpresa::where('user_id', $request->user_id)->delete();
                 }
 
                 $user->nome = $request->nome;
@@ -189,7 +188,7 @@ class ControllerLogin extends Controller
 
                 if ($empresasMarcadas = $request->empresas) {
                     foreach ($empresasMarcadas as $emp) {
-                        $user_empresas = new user_empresas();
+                        $user_empresas = new UserEmpresa();
                         $user_empresas->user_id = $user->id;
                         $user_empresas->empresa_id = $emp;
                         $user_empresas->save();
@@ -201,7 +200,7 @@ class ControllerLogin extends Controller
             if (count($empresasMarcadas) == 0) {
                 dd("deve ter pelo menos 1");
             } else {
-                user_empresas::where('user_id', $request->user_id)->delete();
+                UserEmpresa::where('user_id', $request->user_id)->delete();
             }
 
             $user->nome = $request->nome;
@@ -209,7 +208,7 @@ class ControllerLogin extends Controller
 
             if ($empresasMarcadas = $request->empresas) {
                 foreach ($empresasMarcadas as $emp) {
-                    $user_empresas = new user_empresas();
+                    $user_empresas = new UserEmpresa();
                     $user_empresas->user_id = $user->id;
                     $user_empresas->empresa_id = $emp;
                     $user_empresas->save();
@@ -226,8 +225,8 @@ class ControllerLogin extends Controller
     public function selecionar_filial()
     {
         $user_id = Auth::user()->id;
-        $relacionamentos = user_empresas::where('user_id', $user_id)->pluck('empresa_id');
-        $empresas = empresas::whereIn('id', $relacionamentos)->get();
+        $relacionamentos = UserEmpresa::where('user_id', $user_id)->pluck('empresa_id');
+        $empresas = Empresa::whereIn('id', $relacionamentos)->get();
         return Inertia::render('Selecionar-Filial', compact('empresas'));
     }
 
@@ -235,8 +234,8 @@ class ControllerLogin extends Controller
     public function formulario_adicionar_empresa()
     {
         $user_id = Auth::user()->id;
-        $relacionamentos = user_empresas::where('user_id', $user_id)->pluck('empresa_id'); // peguei as empresas relacionadas ao meu usuario.
-        $users_id = user_empresas::whereIn('empresa_id', $relacionamentos)->pluck('user_id'); // peguei todos os usuarios relacionados as empresas
+        $relacionamentos = UserEmpresa::where('user_id', $user_id)->pluck('empresa_id'); // peguei as empresas relacionadas ao meu usuario.
+        $users_id = UserEmpresa::whereIn('empresa_id', $relacionamentos)->pluck('user_id'); // peguei todos os usuarios relacionados as empresas
         $users = User::whereIn('id', $users_id)
             ->where('id', '!=', Auth::user()->empresa_id)
             ->get(); // busquei
@@ -253,14 +252,14 @@ class ControllerLogin extends Controller
             return back()->withInput()->withErrors(['cnpj' => 'Esse CNPJ Já Está Cadastrado']);
         }
 
-        $empresa = empresas::create([
+        $empresa = Empresa::create([
             'razao' => $request->razao,
             'cnpj' => $request->cnpj
         ]);
 
         if ($usuariosMarcados = $request->input('user')) { // se existir dados
             foreach ($usuariosMarcados as $user) {
-                $user_empresas = new user_empresas();
+                $user_empresas = new UserEmpresa();
                 $user_empresas->user_id = $user;
                 $user_empresas->empresa_id = $empresa->id;
                 $user_empresas->save();
@@ -268,7 +267,7 @@ class ControllerLogin extends Controller
         }
 
         //relacionando usuario ADM
-        $user_empresas = new user_empresas();
+        $user_empresas = new UserEmpresa();
         $user_empresas->user_id = Auth::user()->id;
         $user_empresas->empresa_id = $empresa->id;
         $user_empresas->save();

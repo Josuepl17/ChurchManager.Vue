@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\caixas;
-use App\Models\Descricao_despesas;
-use App\Models\despesas;
-use App\Models\ofertas;
-use App\Models\membros;
+use App\Models\Caixa;
+use App\Models\DescricaoDespesa;
+use App\Models\Despesa;
+use App\Models\Oferta;
+use App\Models\Membro;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\dizimos;
-use App\Models\empresas;
+use App\Models\Dizimo;
+use App\Models\Empresa;
 use App\Models\User;
 use App\Services\MeuServico;
 use Illuminate\Http\Request;
@@ -33,10 +33,10 @@ class DespesasController extends Controller
         $empresa_id = Auth::user()->empresa_id;
 
         // Inicializando a consulta para Descricao_despesas
-        $queryDescricao = Descricao_despesas::where('empresa_id', $empresa_id)->orderBy('id', 'desc')->take(10);
+        $queryDescricao = DescricaoDespesa::where('empresa_id', $empresa_id)->orderBy('id', 'desc')->take(10);
 
         // Inicializando a consulta para Despesas
-        $queryDespesas = despesas::where('empresa_id', $empresa_id);
+        $queryDespesas = Despesa::where('empresa_id', $empresa_id);
 
         // Adicionando o filtro de datas somente se ambas as datas forem definidas
         if ($dataini && $datafi) {
@@ -54,7 +54,7 @@ class DespesasController extends Controller
                 }),
             'totaldespesas' => $queryDespesas->clone()->sum('valor'), // Usando clone para evitar modificar a consulta original
             'datanow' => \Carbon\Carbon::now()->format(('Y-m-d')), // Formatando a data atual como 'd/m/Y'
-            'razao_empresa' => \App\Models\Empresas::where('id', $empresa_id)->value('razao')
+            'razao_empresa' => \App\Models\Empresa::where('id', $empresa_id)->value('razao')
         ];
 
 
@@ -75,8 +75,8 @@ class DespesasController extends Controller
     public function botao_registrar_despesas(request $request)
     {
 
-        if (Descricao_despesas::where('descricao_despesas', $request->descricao)->first() == null) {
-            $descricao = new Descricao_despesas();
+        if (DescricaoDespesa::where('descricao_despesas', $request->descricao)->first() == null) {
+            $descricao = new DescricaoDespesa();
             $descricao->empresa_id =  Auth::user()->empresa_id;
             $descricao->descricao_despesas = $request->descricao;
             $descricao->save();
@@ -87,7 +87,7 @@ class DespesasController extends Controller
             $dados['user_id'] = Auth::id(); //acessa o ID do usuario Autenticado
             $dados['empresa_id'] = Auth::user()->empresa_id; // acessa o dado da coluna do usuario conectado
             $dados['valor'] = str_replace(',', '.', $dados['valor']);
-            despesas::create($dados);
+            Despesa::create($dados);
 
             Session()->flash('sucesso', 'Item criado com Sucesso');
         } else {
@@ -104,11 +104,11 @@ class DespesasController extends Controller
 
     public function botao_excluir_despesas(request $request)
     {
-        $data = despesas::find($request->id);
+        $data = Despesa::find($request->id);
         if (MeuServico::Verificar($data->datereg)) {
             $destroy = $request->id;
 
-            despesas::destroy($destroy);
+            Despesa::destroy($destroy);
             Session()->flash('sucesso',  'Item Apagado com Sucesso');
         } else {
             Session()->flash('falha',  'Falha ao apagar item, Caixa Fechado');

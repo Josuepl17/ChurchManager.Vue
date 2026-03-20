@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\caixas;
-use App\Models\despesas;
-use App\Models\ofertas;
-use App\Models\membros;
+use App\Models\Caixa;
+use App\Models\Despesa;
+use App\Models\Oferta;
+use App\Models\Membro;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\dizimos;
-use App\Models\empresas;
-use App\Models\Eventos;
-use App\Models\Eventos_presencas;
+use App\Models\Dizimo;
+use App\Models\Empresa;
+use App\Models\Evento;
+use App\Models\EventoPresenca;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -34,15 +34,15 @@ class MembrosController extends Controller
     {
         $empresas_id = Auth::user()->empresa_id;
         $dados = $request->pesquisa;
-        $membros = membros::whereRaw('LOWER(nome) LIKE ?', ["%" . strtolower($dados) . "%"])->where('empresa_id', $empresas_id)->get();
-        $qtdEventos = count(Eventos::all());
+        $membros = Membro::whereRaw('LOWER(nome) LIKE ?', ["%" . strtolower($dados) . "%"])->where('empresa_id', $empresas_id)->get();
+        $qtdEventos = count(Evento::all());
         return Inertia::render('index', compact('membros', 'qtdEventos', 'dados'));
     }
 
     public function cadastro_membro()
     {
         $empresas_id = Auth::user()->empresa_id;
-        $razao_empresa = empresas::where('id', $empresas_id)->value('razao');
+        $razao_empresa = Empresa::where('id', $empresas_id)->value('razao');
 
         return Inertia::render('FormMembro', compact('razao_empresa'));
     }
@@ -53,7 +53,7 @@ class MembrosController extends Controller
         $dados['user_id'] = Auth::id();
         $dados['empresa_id'] = Auth::user()->empresa_id;
         $dados = array_map('strtoupper', array_map('strval', $dados));
-        membros::create($dados);
+        Membro::create($dados);
         return redirect('/dashboard');
     }
 
@@ -61,7 +61,7 @@ class MembrosController extends Controller
     public function excluir_membro(request $request)
     {
         $destroy = $request->id;
-        membros::destroy($destroy); //banco de dados com apagar cascade, todos os dizimos desses usuarios vão ter apagados tambem
+        Membro::destroy($destroy); //banco de dados com apagar cascade, todos os dizimos desses usuarios vão ter apagados tambem
         return redirect('/dashboard');
     }
 
@@ -71,19 +71,19 @@ class MembrosController extends Controller
         $empresa_id = Auth::user();
         $razao_empresa = $empresa_id->empresas->first();
         $razao_empresa = $razao_empresa->razao;
-        $eventos = Eventos::where('empresa_id', Auth::user()->empresa_id)->get()
+        $eventos = Evento::where('empresa_id', Auth::user()->empresa_id)->get()
             ->map(function ($eventos) {
                 // Formatar a data 'data_evento' para 'd/m/Y'
                 $eventos->datereg = Carbon::parse($eventos->datereg)->format('d/m/Y');
                 return $eventos;
             });
-        $membros = membros::where('empresa_id', Auth::user()->empresa_id)->get();
+        $membros = Membro::where('empresa_id', Auth::user()->empresa_id)->get();
         return Inertia::render('Eventos', compact('eventos', 'membros'));
     }
 
     public function presença_evento()
     {
-        $membros = membros::all();
+        $membros = Membro::all();
         $empresa_id = Auth::user();
         $razao_empresa = $empresa_id->empresas->first();
         $razao_empresa = $razao_empresa->razao;
@@ -93,13 +93,13 @@ class MembrosController extends Controller
     public function regitrar_presenca(Request $request)
     {
         //dd($request->all());
-        $membros = membros::where('empresa_id', Auth::user()->empresa_id)->count();
+        $membros = Membro::where('empresa_id', Auth::user()->empresa_id)->count();
         $presentes = $request->input('presenca');
         $presentes = count($presentes);
         $faltantes = $membros - $presentes;
 
 
-        $evento = Eventos::create([
+        $evento = Evento::create([
             'user_id' => Auth::id(),
             'empresa_id' => Auth::user()->empresa_id,
             'evento' => $request->input('evento'),
@@ -110,11 +110,11 @@ class MembrosController extends Controller
 
 
         foreach ($request->input('presenca') as $presente) {
-            $presenca = new Eventos_presencas();
+            $presenca = new EventoPresenca();
             $presenca->evento_id = $evento->id;
             $presenca->membro_id = $presente;
             $presenca->save();
-            $membros = membros::find($presente);
+            $membros = Membro::find($presente);
             $membros->presenca += 1;
             $membros->save();
         }

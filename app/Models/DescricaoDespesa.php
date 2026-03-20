@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Eventos_presencas extends Model
+class DescricaoDespesa extends Model
 {
-    protected $fillable = ['id',  'evento_id',  'membros_id'];
     use HasFactory;
+    protected $table = 'descricao_despesas';
 }

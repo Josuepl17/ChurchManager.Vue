@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\caixas;
-use App\Models\despesas;
-use App\Models\ofertas;
-use App\Models\membros;
+use App\Models\Caixa;
+use App\Models\Despesa;
+use App\Models\Oferta;
+use App\Models\Membro;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\dizimos;
-use App\Models\empresas;
+use App\Models\Dizimo;
+use App\Models\Empresa;
 use App\Models\User;
 use App\Services\MeuServico;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class OfertasController extends Controller
         $empresa_id = Auth::user()->empresa_id; // acessa o dado da coluna do usuario conectado
 
 
-        $queryOfertas = ofertas::where('empresa_id', $empresa_id);
+        $queryOfertas = Oferta::where('empresa_id', $empresa_id);
 
         // Adicionando o filtro de datas somente se ambas as datas forem definidas
         if ($dataini && $datafi) {
@@ -49,7 +49,7 @@ class OfertasController extends Controller
                 }),
             'totalofertas' => $queryOfertas->clone()->sum('valor'), // Usando clone para evitar modificar a consulta original
             'datanow' => \Carbon\Carbon::now()->format('Y-m-d'), // Formatando a data atual como 'd/m/Y'
-            'razao_empresa' => \App\Models\Empresas::where('id', $empresa_id)->value('razao')
+            'razao_empresa' => \App\Models\Empresa::where('id', $empresa_id)->value('razao')
         ];
 
         return Inertia::render('Ofertas', compact('dados', 'dataini', 'datafi'));
@@ -73,7 +73,7 @@ class OfertasController extends Controller
             $dados['user_id'] = Auth::id(); // acessa o ID do usuario Autenticado e inseri na variavel dados
             $dados['empresa_id'] = Auth::user()->empresa_id; // acessa o dado da coluna do usuario conectado e inseri na variavel dados
             $dados['valor'] = str_replace(',', '.', $dados['valor']); // Troca virgula por Ponto e Inseri na Variavel Dados 
-            ofertas::create($dados); // Cria o Registro da Nova Oferta
+            Oferta::create($dados); // Cria o Registro da Nova Oferta
             Session()->flash('sucesso',  'Item Criado Com Sucesso');
         } else {
             Session()->flash('falha',  'Falha ao apagar item, Caixa Fechado');
@@ -87,10 +87,10 @@ class OfertasController extends Controller
 
     public function botao_excluir_oferta(request $request)
     {
-        $data = ofertas::find($request->id);
+        $data = Oferta::find($request->id);
         if (MeuServico::Verificar($data->datereg)) { //verifica se as data esta entre as duas datas do caixa
             $destroy = $request->id;
-            ofertas::destroy($destroy); // apaga o registro que tenha esse ID
+            Oferta::destroy($destroy); // apaga o registro que tenha esse ID
             Session()->flash('sucesso',  'Item Apagado com Sucesso');
         } else {
             Session()->flash('falha',  'Falha ao apagar item, Caixa Fechado');

@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Events\FilaEmail;
 use App\Jobs\EnvioEmail as JobsEnvioEmail;
 use App\Mail\EnvioEmail;
-use App\Models\caixas;
-use App\Models\despesas;
-use App\Models\ofertas;
-use App\Models\membros;
+use App\Models\Caixa;
+use App\Models\Despesa;
+use App\Models\Oferta;
+use App\Models\Membro;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\dizimos;
-use App\Models\empresas;
+use App\Models\Dizimo;
+use App\Models\Empresa;
 use App\Models\Jobs;
 use App\Services\MeuServico;
 use Illuminate\Http\Request;
@@ -35,7 +35,7 @@ class DizimosController extends Controller
         $empresa_id = Auth::user()->empresa_id;
 
         // Buscando todos os dízimos da empresa
-        $dizimos = dizimos::with('membros')
+        $dizimos = Dizimo::with('membros')
             ->where('empresa_id', $empresa_id)
             ->orderBy('datereg', 'desc')
             ->get()
@@ -48,10 +48,10 @@ class DizimosController extends Controller
         $dados = [
             'dizimos' => $dizimos,
             'datanow' => Carbon::now()->format('Y-m-d'),
-            'razao_empresa' => empresas::where('id', $empresa_id)->value('razao')
+            'razao_empresa' => Empresa::where('id', $empresa_id)->value('razao')
         ];
 
-        $membros = membros::where('empresa_id', $empresa_id)
+        $membros = Membro::where('empresa_id', $empresa_id)
             ->orderBy('nome', 'asc')
             ->get();
 
@@ -70,13 +70,13 @@ class DizimosController extends Controller
             $dados = $request->only('id', 'datereg', 'valor', 'membro_id');
 
             // Buscar o nome do membro para salvar redundância
-            $membro = membros::find($request->membro_id);
+            $membro = Membro::find($request->membro_id);
             $dados['nome'] = $membro ? $membro->nome . ' ' . $membro->sobrenome : 'Membro não encontrado';
 
             $dados['user_id'] = Auth::id();
             $dados['empresa_id'] = Auth::user()->empresa_id;
             $dados['valor'] = str_replace(',', '.', $dados['valor']);
-            dizimos::create($dados);
+            Dizimo::create($dados);
             Session()->flash('sucesso', 'Item criado com Sucesso');
 
         } else {
@@ -90,11 +90,11 @@ class DizimosController extends Controller
 
     public function botao_excluir_dizimo(request $request)
     {
-        $data = dizimos::find($request->id);
+        $data = Dizimo::find($request->id);
 
         if (MeuServico::Verificar($data->datereg)) {
             $destroy = $request->id;
-            dizimos::destroy($destroy);
+            Dizimo::destroy($destroy);
             Session()->flash('sucesso', 'Item Apagado com Sucesso');
         } else {
             Session()->flash('falha', 'Falha ao apagar item, Caixa Fechado');

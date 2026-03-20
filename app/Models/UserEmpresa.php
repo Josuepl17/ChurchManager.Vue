@@ -5,7 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Descricao_despesas extends Model
+class UserEmpresa extends Model
 {
     use HasFactory;
+    protected $fillable = ['id', 'user_id',  'empresa_id' ];
+
+       protected $table = 'user_empresas';
+
+
+
 }
