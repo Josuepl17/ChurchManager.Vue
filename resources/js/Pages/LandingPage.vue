@@ -1,4 +1,26 @@
 <template>
+    <Head>
+        <title>ChurchManager - Gestão Eclesiástica Inteligente</title>
+        <meta name="description" content="Simplifique a administração da sua igreja com o ChurchManager. Gestão de membros, controle financeiro, eventos e relatórios precisos em um só lugar. Comece agora!" />
+        <meta name="keywords" content="gestão de igreja, software para igreja, controle financeiro igreja, sistema para igrejas, gestão eclesiástica, ChurchManager" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="ChurchManager" />
+        
+        <!-- Open Graph / Redes Sociais -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="ChurchManager - Gestão Eclesiástica Inteligente" />
+        <meta property="og:description" content="A plataforma completa para simplificar a administração da sua igreja. Membros, finanças e eventos em um só lugar." />
+        <meta property="og:image" content="/img/logo.png" />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="ChurchManager - Gestão Eclesiástica Inteligente" />
+        <meta property="twitter:description" content="A plataforma completa para simplificar a administração da sua igreja. Membros, finanças e eventos em um só lugar." />
+        <meta property="twitter:image" content="/img/logo.png" />
+
+        <!-- Google Search Console (Substitua o content pelo seu código quando for verificar) -->
+        <meta name="google-site-verification" content="COLOQUE_SEU_CODIGO_AQUI" />
+    </Head>
     <div class="landing-container">
         <!-- Navigation -->
         <nav class="navbar">
@@ -106,7 +128,7 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { ref, onMounted, onUnmounted } from 'vue';
 
 const screenshots = [
