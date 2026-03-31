@@ -7,12 +7,14 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import Layout from './Components/Layout-Principal.vue';
 import GuestLayout from './Components/GuestLayout.vue';
 import { useForm } from '@inertiajs/vue3';
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-
-
+const appName = import.meta.env.VITE_APP_NAME || 'ChurchManager';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
+    title: (title) => {
+        if (!title) return appName;
+        if (title.includes(appName)) return title;
+        return `${title} - ${appName}`;
+    },
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
