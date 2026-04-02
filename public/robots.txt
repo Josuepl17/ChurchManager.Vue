@@ -1,2 +1,4 @@
 User-agent: *
-Disallow:
+Allow: /
+
+Sitemap: https://churchmanager.cronosdev.com.br/sitemap.xml

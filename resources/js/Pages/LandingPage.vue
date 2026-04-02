@@ -1,25 +1,31 @@
 <template>
     <Head>
         <title>ChurchManager - Gestão Eclesiástica Inteligente</title>
-        <meta name="description" content="Simplifique a administração da sua igreja com o ChurchManager. Gestão de membros, controle financeiro, eventos e relatórios precisos em um só lugar. Comece agora!" />
-        <meta name="keywords" content="gestão de igreja, software para igreja, controle financeiro igreja, sistema para igrejas, gestão eclesiástica, ChurchManager" />
-        <meta name="robots" content="index, follow" />
-        <meta name="author" content="ChurchManager" />
-        
+        <meta head-key="description" name="description" content="Simplifique a administração da sua igreja com o ChurchManager. Gestão de membros, controle financeiro, eventos e relatórios precisos em um só lugar. Comece agora!" />
+        <meta head-key="keywords" name="keywords" content="gestão de igreja, software para igreja, controle financeiro igreja, sistema para igrejas, gestão eclesiástica, ChurchManager" />
+        <meta head-key="robots" name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta head-key="author" name="author" content="ChurchManager" />
+
+        <!-- Link canônico — evita penalização por conteúdo duplicado -->
+        <link head-key="canonical" rel="canonical" href="https://churchmanager.cronosdev.com.br/" />
+
         <!-- Open Graph / Redes Sociais -->
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="ChurchManager - Gestão Eclesiástica Inteligente" />
-        <meta property="og:description" content="A plataforma completa para simplificar a administração da sua igreja. Membros, finanças e eventos em um só lugar." />
-        <meta property="og:image" content="/img/logo.png" />
+        <meta head-key="og:type" property="og:type" content="website" />
+        <meta head-key="og:url" property="og:url" content="https://churchmanager.cronosdev.com.br/" />
+        <meta head-key="og:title" property="og:title" content="ChurchManager - Gestão Eclesiástica Inteligente" />
+        <meta head-key="og:description" property="og:description" content="A plataforma completa para simplificar a administração da sua igreja. Membros, finanças e eventos em um só lugar." />
+        <meta head-key="og:image" property="og:image" content="https://churchmanager.cronosdev.com.br/img/logo.png" />
+        <meta head-key="og:site_name" property="og:site_name" content="ChurchManager" />
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:title" content="ChurchManager - Gestão Eclesiástica Inteligente" />
-        <meta property="twitter:description" content="A plataforma completa para simplificar a administração da sua igreja. Membros, finanças e eventos em um só lugar." />
-        <meta property="twitter:image" content="/img/logo.png" />
+        <!-- Twitter Cards -->
+        <meta head-key="twitter:card" name="twitter:card" content="summary_large_image" />
+        <meta head-key="twitter:url" name="twitter:url" content="https://churchmanager.cronosdev.com.br/" />
+        <meta head-key="twitter:title" name="twitter:title" content="ChurchManager - Gestão Eclesiástica Inteligente" />
+        <meta head-key="twitter:description" name="twitter:description" content="A plataforma completa para simplificar a administração da sua igreja. Membros, finanças e eventos em um só lugar." />
+        <meta head-key="twitter:image" name="twitter:image" content="https://churchmanager.cronosdev.com.br/img/logo.png" />
 
-        <!-- Google Search Console (Substitua o content pelo seu código quando for verificar) -->
-        <meta name="google-site-verification" content="COLOQUE_SEU_CODIGO_AQUI" />
+        <!-- Google Search Console: substitua pelo código fornecido pelo GSC -->
+        <!-- <meta name="google-site-verification" content="SUA_CHAVE_AQUI" /> -->
     </Head>
     <div class="landing-container">
         <!-- Navigation -->
